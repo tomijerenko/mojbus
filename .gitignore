@@ -1,5 +1,3 @@
-!.gitignore
-!MojBus/*
-!MojBus.sln
+.vs
 MojBus/bin
 MojBus/obj
