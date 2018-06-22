@@ -1,0 +1,5 @@
+!.gitignore
+!MojBus/*
+!MojBus.sln
+MojBus/bin
+MojBus/obj
