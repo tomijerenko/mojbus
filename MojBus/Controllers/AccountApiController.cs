@@ -21,15 +21,6 @@ namespace MojBus.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet]
-        public IActionResult GetMethods()
-        {
-            return Json(new {
-                Register = new RegisterApiModel(),
-                Login = new LoginApiModel()
-            });
-        }
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterApiModel model)
         {

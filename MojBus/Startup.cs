@@ -25,6 +25,9 @@ namespace MojBus
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("mojbusconnectionstring")));
 
+            services.AddDbContext<MojBusContext>(options =>
+                options.UseSqlServer(Environment.GetEnvironmentVariable("mojbusconnectionstring")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 6;
