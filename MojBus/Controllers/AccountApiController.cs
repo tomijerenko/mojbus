@@ -7,7 +7,7 @@ using MojBus.Models.AccountApiModels;
 namespace MojBus.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Account/[action]")]
+    [Route("api/[action]")]
     public class AccountApiController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
