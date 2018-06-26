@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
 using MojBus.Data.Entities;
-using MojBus.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,7 +12,15 @@ namespace MojBus.Helpers
     {
         public static object GetStops(MojBusContext context)
         {
-            return context.Gtfsstops.ToList();
+            return from stops in context.Gtfsstops
+                   select new
+                   {
+                       stops.StopId,
+                       stops.StopName,
+                       stops.StopLat,
+                       stops.StopLon,
+                       stops.WeelchairBoarding
+                   };
         }
 
         public static object StopTimesForStop(MojBusContext context, int stopId, DateTime date)
@@ -45,7 +52,13 @@ namespace MojBus.Helpers
 
         public static object GetRoutes(MojBusContext context)
         {
-            return context.Gtfsroutes.ToList();
+            return from routes in context.Gtfsroutes
+                   select new
+                   {
+                       routes.RouteId,
+                       routes.RouteShortName,
+                       routes.RouteLongName
+                   };
         }
     }
 }
