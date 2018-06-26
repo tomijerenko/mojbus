@@ -12,6 +12,7 @@ namespace MojBus.Data
         public virtual DbSet<Gtfsstops> Gtfsstops { get; set; }
         public virtual DbSet<GtfsstopTimes> GtfsstopTimes { get; set; }
         public virtual DbSet<Gtfstrips> Gtfstrips { get; set; }
+        public virtual DbSet<StopDataEntity> StopData { get; set; }
 
         public MojBusContext(DbContextOptions<MojBusContext> options)
             : base(options)
