@@ -1,5 +1,10 @@
-﻿using MojBus.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MojBus.Data;
+using MojBus.Data.Entities;
+using MojBus.Models;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace MojBus.Helpers
@@ -11,53 +16,31 @@ namespace MojBus.Helpers
             return context.Gtfsstops.ToList();
         }
 
-        public static object StopTimesForStop(MojBusContext context, int stopId)
+        public static object StopTimesForStop(MojBusContext context, int stopId, DateTime date)
         {
-            DateTime todaysDate = DateTime.Today;
+            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
+            object[] sqlParams = {
+                new SqlParameter("@StopId", stopId),
+                new SqlParameter("@Date", "20180601")
+            };
 
-            var queryData = from stops in context.Gtfsstops
-                            join stopTimes in context.GtfsstopTimes on stops.StopId equals stopTimes.StopId
-                            join trips in context.Gtfstrips on stopTimes.TripId equals trips.TripId
-                            join calendar in context.Gtfscalendar on trips.ServiceId equals calendar.ServiceId
-                            join calendarDates in context.GtfscalendarDates on calendar.ServiceId equals calendarDates.ServiceId
-                            join routes in context.Gtfsroutes on trips.RouteId equals routes.RouteId
-                            where
-                                 /*(calendar.StartDate < todaysDate && todaysDate < calendar.EndDate) &&
-                                 calendarDates.Date != todaysDate &&*/
-                                 stops.StopId == stopId
-                            select new
-                            {
-                                routes,
-                                trips,
-                                stopTimes
-                            };
+            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStation @StopId, @Date;", sqlParams).ToList();
 
-            return queryData;
+            return Converters.StopDataEntityToModel(data);
         }
 
-        public static object StopTimesForStop(MojBusContext context, int stopId, int routeId)
+        public static object StopTimesForStop(MojBusContext context, int stopId, int routeId, DateTime date)
         {
-            DateTime todaysDate = DateTime.Today;
+            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
+            object[] sqlParams = {
+                new SqlParameter("@StopId", stopId),
+                new SqlParameter("@RouteId", routeId),
+                new SqlParameter("@Date", "20180601")                
+            };
 
-            var queryData = from stops in context.Gtfsstops
-                            join stopTimes in context.GtfsstopTimes on stops.StopId equals stopTimes.StopId
-                            join trips in context.Gtfstrips on stopTimes.TripId equals trips.TripId
-                            join calendar in context.Gtfscalendar on trips.ServiceId equals calendar.ServiceId
-                            join calendarDates in context.GtfscalendarDates on calendar.ServiceId equals calendarDates.ServiceId
-                            join routes in context.Gtfsroutes on trips.RouteId equals routes.RouteId
-                            where
-                                 /*(calendar.StartDate < todaysDate && todaysDate < calendar.EndDate) &&
-                                 calendarDates.Date != todaysDate &&*/
-                                 stops.StopId == stopId &&
-                                 routes.RouteId == routeId
-                            select new
-                            {
-                                routes,
-                                trips,
-                                stopTimes
-                            };
+            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopId, @RouteId, @Date;", sqlParams).ToList();
 
-            return queryData;
+            return Converters.StopDataEntityToModel(data);
         }
 
         public static object GetRoutes(MojBusContext context)

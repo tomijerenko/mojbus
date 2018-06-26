@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MojBus.Data;
 using MojBus.Helpers;
+using System;
 
 namespace MojBus.Controllers
 {
@@ -26,15 +27,15 @@ namespace MojBus.Controllers
         }
 
         [HttpGet]
-        public IActionResult StopData(int stopId)
+        public IActionResult StopData(int stopId, DateTime date)
         {
-            return Json(MojBusHelper.StopTimesForStop(_context, stopId));
+            return Json(MojBusHelper.StopTimesForStop(_context, stopId, date));
         }
 
         [HttpGet]
-        public IActionResult StopDataForRoute(int stopId, int routeId)
+        public IActionResult StopDataForRoute(int stopId, int routeId, DateTime date)
         {
-            return Json(MojBusHelper.StopTimesForStop(_context, stopId, routeId));
+            return Json(MojBusHelper.StopTimesForStop(_context, stopId, routeId, date));
         }
     }
 }
