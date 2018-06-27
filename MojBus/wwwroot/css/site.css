@@ -36,3 +36,7 @@
 .searchBar {
     width: 300px;
 }
+
+#departureTime :first-child {
+    color:red;
+}
