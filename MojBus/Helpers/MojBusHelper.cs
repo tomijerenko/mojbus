@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
 using MojBus.Data.Entities;
+using MojBus.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -23,7 +24,7 @@ namespace MojBus.Helpers
                    };
         }
 
-        public static object StopTimesForStop(MojBusContext context, int stopId, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(MojBusContext context, int stopId, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
@@ -36,7 +37,7 @@ namespace MojBus.Helpers
             return Converters.StopDataEntityToModel(data);
         }
 
-        public static object StopTimesForStop(MojBusContext context, int stopId, int routeId, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(MojBusContext context, int stopId, int routeId, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {

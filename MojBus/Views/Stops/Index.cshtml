@@ -1,0 +1,27 @@
+﻿@model List<StopDataModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Postaje:</h2>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div>
+                @item.TripHeadsign
+            </div>
+            <div>
+                @item.TripShortName
+            </div>
+            <div>
+                @foreach (var departureTime in item.DepartureTimes)
+                {
+                    @departureTime
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
