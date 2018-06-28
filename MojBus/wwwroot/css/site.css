@@ -37,6 +37,17 @@
     width: 300px;
 }
 
-#departureTime :first-child {
+.departureTime :first-child {
     color:red;
+}
+
+.lineNumberContainer {
+    float: left;
+    min-height: 50px;
+    width: 50px;
+    font-size: 2em;
+}
+
+.lineDataContainer {
+    min-height:50px;
 }

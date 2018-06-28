@@ -14,9 +14,9 @@ namespace MojBus.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string stopName, int stopId)
+        public IActionResult Index(string stopName)
         {
-            return View(MojBusHelper.StopTimesForStop(_context, stopId, DateTime.Now));
+            return View(MojBusHelper.StopTimesForStop(_context, stopName, DateTime.Now));
         }
     }
 }

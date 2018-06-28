@@ -24,29 +24,29 @@ namespace MojBus.Helpers
                    };
         }
 
-        public static List<StopDataModel> StopTimesForStop(MojBusContext context, int stopId, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
-                new SqlParameter("@StopId", stopId),
+                new SqlParameter("@StopName", stopName),
                 new SqlParameter("@Date", "20180601")
             };
 
-            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStation @StopId, @Date;", sqlParams).ToList();
+            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStation @StopName, @Date;", sqlParams).ToList();
 
             return Converters.StopDataEntityToModel(data);
         }
 
-        public static List<StopDataModel> StopTimesForStop(MojBusContext context, int stopId, int routeId, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, string routeShortName, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
-                new SqlParameter("@StopId", stopId),
-                new SqlParameter("@RouteId", routeId),
+                new SqlParameter("@StopName", stopName),
+                new SqlParameter("@RouteShortName", routeShortName),
                 new SqlParameter("@Date", "20180601")                
             };
 
-            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopId, @RouteId, @Date;", sqlParams).ToList();
+            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopName, @RouteShortName, @Date;", sqlParams).ToList();
 
             return Converters.StopDataEntityToModel(data);
         }

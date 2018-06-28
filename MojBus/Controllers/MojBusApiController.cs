@@ -27,15 +27,15 @@ namespace MojBus.Controllers
         }
 
         [HttpGet]
-        public IActionResult StopData(int stopId, DateTime date)
+        public IActionResult StopData(string stopName, DateTime date)
         {
-            return Json(MojBusHelper.StopTimesForStop(_context, stopId, date));
+            return Json(MojBusHelper.StopTimesForStop(_context, stopName, date));
         }
 
         [HttpGet]
-        public IActionResult StopDataForRoute(int stopId, int routeId, DateTime date)
+        public IActionResult StopDataForRoute(string stopName, string routeShortName, DateTime date)
         {
-            return Json(MojBusHelper.StopTimesForStop(_context, stopId, routeId, date));
+            return Json(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, date));
         }
     }
 }
