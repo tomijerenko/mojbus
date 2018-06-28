@@ -19,11 +19,14 @@
             <div>
                 @item.TripHeadsign
             </div>
+            <div>
+                Smer voznje: @item.DirectionID
+            </div>
             <div class="departureTime">
                 @foreach (string departureTime in item.DepartureTimes@*.Where(x => (time.Hour < Convert.ToInt32(x.Substring(0, 2)) && time.Minute < Convert.ToInt32(x.Substring(3, 2))) || (x.Length >= 6 && x.Substring(6, 2) == "+1"))*@)
 {
-            <span>@departureTime</span>
-        }
+        <span>@departureTime</span>
+    }
             </div>
         </div>
     </a>
