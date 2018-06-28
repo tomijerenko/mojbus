@@ -1,11 +1,11 @@
-﻿@model List<Gtfsstops>
+﻿@model List<string>
 @{
     ViewData["Title"] = "Default";
 }
 <div class="btn-group searchBar center-block">
     <input id="filterInput" class="form-control dropdown-toggle" onkeyup="filterMenu()" data-toggle="dropdown" placeholder="Search..." />
     <ul id="filterList" class="dropdown-menu pre-scrollable btn-block">
-        @foreach (var item in Model.Select(x=>x.StopName).Distinct())
+        @foreach (var item in Model)
         {
             <li>
                 <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item })">@item</a>

@@ -16,7 +16,14 @@ namespace MojBus.Controllers
 
         public IActionResult Index(string stopName)
         {
+            ViewData["StopName"] = stopName;
             return View(MojBusHelper.StopTimesForStop(_context, stopName, DateTime.Now));
+        }
+
+        public IActionResult StopDataForRoute(string stopName, string routeShortName)
+        {
+            ViewData["StopName"] = stopName;
+            return View(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, DateTime.Now));
         }
     }
 }

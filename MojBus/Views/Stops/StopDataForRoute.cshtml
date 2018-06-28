@@ -1,11 +1,11 @@
 ﻿@model List<StopDataModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "StopDataForRoute";
 }
 @{DateTime time = DateTime.Now;}
 
 <div class="text-center">
-    <h2>Vozni redi postaje @ViewData["StopName"]:</h2>
+    <h2>Linijski vozni red za postajo @ViewData["StopName"]:</h2>
 </div>
 
 <div>
@@ -13,7 +13,7 @@
     {
         @if (item != null)
         {
-            <a class="btn btn-default btn-block" href="@Url.Action("StopDataForRoute","Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName })">
+            <div class="btn btn-default btn-block">
                 <div class="lineNumberContainer">
                     <span>@item.TripShortName</span>
                 </div>
@@ -26,15 +26,13 @@
                     </div>
                     <div class="departureTime">
                         @foreach (string departureTime in item.DepartureTimes@*.Where(x => (time.Hour < Convert.ToInt32(x.Substring(0, 2)) && time.Minute < Convert.ToInt32(x.Substring(3, 2))) || (x.Length >= 6 && x.Substring(6, 2) == "+1"))*@)
-                        {
-                            <span>@departureTime</span>
-                        }
+{
+<span>@departureTime</span>
+}
                     </div>
                 </div>
-            </a>
+            </div>
         }
 
     }
 </div>
-
-
