@@ -1,8 +1,8 @@
 ﻿@model List<StopDataModel>
 @{
     ViewData["Title"] = "Index";
+    DateTime time = DateTime.Now;
 }
-@{DateTime time = DateTime.Now;}
 
 <div class="text-center">
     <h2>Vozni redi postaje @ViewData["StopName"]:</h2>
@@ -13,7 +13,7 @@
     {
         @if (item != null)
         {
-            <a class="btn btn-default btn-block" href="@Url.Action("StopDataForRoute","Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName })">
+            <a class="btn btn-default btn-block" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName, tripHeadSign = item.TripHeadsign })">
                 <div class="lineNumberContainer">
                     <span>@item.TripShortName</span>
                 </div>
@@ -25,7 +25,7 @@
                         Smer voznje: @item.DirectionID
                     </div>
                     <div class="departureTime">
-                        @foreach (string departureTime in item.DepartureTimes@*.Where(x => (time.Hour < Convert.ToInt32(x.Substring(0, 2)) && time.Minute < Convert.ToInt32(x.Substring(3, 2))) || (x.Length >= 6 && x.Substring(6, 2) == "+1"))*@)
+                        @foreach (string departureTime in item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5))
                         {
                             <span>@departureTime</span>
                         }

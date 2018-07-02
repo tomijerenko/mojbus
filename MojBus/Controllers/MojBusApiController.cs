@@ -37,5 +37,11 @@ namespace MojBus.Controllers
         {
             return Json(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, date));
         }
+
+        [HttpGet]
+        public IActionResult StopDataForRouteTrip(string stopName, string routeShortName, string tripHeadSign, DateTime date)
+        {
+            return Json(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, tripHeadSign, date));
+        }
     }
 }

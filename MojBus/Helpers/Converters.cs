@@ -1,6 +1,8 @@
 ﻿using MojBus.Data.Entities;
 using MojBus.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MojBus.Helpers
 {
@@ -43,6 +45,11 @@ namespace MojBus.Helpers
             mappedData.Add(previous);
 
             return mappedData;
+        }
+
+        public static List<RouteDataModel> RouteDataToModel(List<RouteStopsEntity> data)
+        {
+            return new List<RouteDataModel>();
         }
     }
 }

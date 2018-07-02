@@ -1,38 +1,41 @@
 ﻿@model List<StopDataModel>
 @{
-    ViewData["Title"] = "StopDataForRoute";
+    ViewData["Title"] = "StopDataForRouteTrip";
+    string tempTime = "0";
 }
-@{DateTime time = DateTime.Now;}
 
 <div class="text-center">
-    <h2>Linijski vozni red za postajo @ViewData["StopName"]:</h2>
+    <h1>Linijski vozni red za postajo @ViewData["StopName"]:</h1>
 </div>
 
-<div>
+<div class="text-center">
     @foreach (var item in Model)
     {
         @if (item != null)
         {
-            <div class="btn btn-default btn-block">
-                <div class="lineNumberContainer">
-                    <span>@item.TripShortName</span>
-                </div>
-                <div class="lineDataContainer">
-                    <div>
-                        @item.TripHeadsign
-                    </div>
-                    <div>
-                        Smer voznje: @item.DirectionID
-                    </div>
-                    <div class="departureTime">
-                        @foreach (string departureTime in item.DepartureTimes@*.Where(x => (time.Hour < Convert.ToInt32(x.Substring(0, 2)) && time.Minute < Convert.ToInt32(x.Substring(3, 2))) || (x.Length >= 6 && x.Substring(6, 2) == "+1"))*@)
-{
-<span>@departureTime</span>
-}
-                    </div>
-                </div>
+            tempTime = item.DepartureTimes.First().Substring(0, 2);
+            <h2>
+                @item.TripShortName
+                @item.TripHeadsign
+            </h2>
+            <h3>
+                Smer voznje: @item.DirectionID
+            </h3>
+            <div>
+                @foreach (string departureTime in item.DepartureTimes)
+                {
+                    if (departureTime.Substring(0, 2) != tempTime)
+                    {
+                        <br />
+                        tempTime = departureTime.Substring(0, 2);
+                    }
+                    <span>@departureTime</span>
+                }
             </div>
         }
-
+        else
+        {
+            <h2>NE VOZI NA TA DAN</h2>
+        }
     }
 </div>

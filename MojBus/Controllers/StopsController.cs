@@ -20,10 +20,10 @@ namespace MojBus.Controllers
             return View(MojBusHelper.StopTimesForStop(_context, stopName, DateTime.Now));
         }
 
-        public IActionResult StopDataForRoute(string stopName, string routeShortName)
+        public IActionResult StopDataForRoute(string stopName, string routeShortName, string tripHeadSign)
         {
             ViewData["StopName"] = stopName;
-            return View(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, DateTime.Now));
+            return View(MojBusHelper.StopTimesForStop(_context, stopName, routeShortName, tripHeadSign, DateTime.Now));
         }
     }
 }

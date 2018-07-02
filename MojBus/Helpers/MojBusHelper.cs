@@ -43,12 +43,40 @@ namespace MojBus.Helpers
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@RouteShortName", routeShortName),
-                new SqlParameter("@Date", "20180601")                
+                new SqlParameter("@Date", "20180601")
             };
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopName, @RouteShortName, @Date;", sqlParams).ToList();
 
             return Converters.StopDataEntityToModel(data);
+        }
+
+        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, string routeShortName, string tripHeadSign, DateTime date)
+        {
+            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
+            object[] sqlParams = {
+                new SqlParameter("@StopName", stopName),
+                new SqlParameter("@RouteShortName", routeShortName),
+                new SqlParameter("@TripHeadSign", tripHeadSign),
+                new SqlParameter("@Date", "20180601")
+            };
+
+            List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRouteTrip @StopName, @RouteShortName, @TripHeadSign, @Date;", sqlParams).ToList();
+
+            return Converters.StopDataEntityToModel(data);
+        }
+
+        public static List<RouteDataModel> RouteData(MojBusContext context, string routeShortName, DateTime date)
+        {
+            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
+            object[] sqlParams = {
+                new SqlParameter("@RouteShortName", routeShortName),
+                new SqlParameter("@Date", "20180601")
+            };
+
+            List<RouteStopsEntity> data = context.Set<RouteStopsEntity>().FromSql("exec dbo.RouteStopTimes @RouteShortName, @Date;", sqlParams).ToList();
+
+            return Converters.RouteDataToModel(data);
         }
 
         public static object GetRoutes(MojBusContext context)
