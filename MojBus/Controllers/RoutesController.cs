@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MojBus.Data;
-using MojBus.Helpers;
+using MojBus.Extensions;
 using System;
 
 namespace MojBus.Controllers
@@ -17,7 +17,7 @@ namespace MojBus.Controllers
         public IActionResult Index(string routeName)
         {
             ViewData["RouteName"] = routeName;
-            return View(MojBusHelper.RouteData(_context, routeName, DateTime.Now));
+            return View(_context.RouteData(routeName, DateTime.Now));
         }
     }
 }

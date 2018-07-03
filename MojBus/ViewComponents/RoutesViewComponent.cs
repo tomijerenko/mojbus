@@ -19,6 +19,7 @@ namespace MojBus.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             List<string> stops = await _context.Gtfsroutes.Select(x => x.RouteShortName).Distinct().ToListAsync();
+
             return View(stops);
         }
     }

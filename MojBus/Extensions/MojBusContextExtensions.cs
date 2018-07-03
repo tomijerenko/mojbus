@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace MojBus.Helpers
+namespace MojBus.Extensions
 {
-    public class MojBusHelper
+    public static class MojBusContextExtensions
     {
-        public static object GetStops(MojBusContext context)
+        public static object GetStops(this MojBusContext context)
         {
             return from stops in context.Gtfsstops
                    select new
@@ -24,7 +24,18 @@ namespace MojBus.Helpers
                    };
         }
 
-        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, DateTime date)
+        public static object GetRoutes(this MojBusContext context)
+        {
+            return from routes in context.Gtfsroutes
+                   select new
+                   {
+                       routes.RouteId,
+                       routes.RouteShortName,
+                       routes.RouteLongName
+                   };
+        }
+
+        public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
@@ -34,10 +45,10 @@ namespace MojBus.Helpers
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStation @StopName, @Date;", sqlParams).ToList();
 
-            return Converters.StopDataEntityToModel(data);
+            return data.StopDataEntityToModel();
         }
 
-        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, string routeShortName, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, string routeShortName, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
@@ -48,10 +59,10 @@ namespace MojBus.Helpers
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopName, @RouteShortName, @Date;", sqlParams).ToList();
 
-            return Converters.StopDataEntityToModel(data);
+            return data.StopDataEntityToModel();
         }
 
-        public static List<StopDataModel> StopTimesForStop(MojBusContext context, string stopName, string routeShortName, string tripHeadSign, DateTime date)
+        public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, string routeShortName, string tripHeadSign, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
@@ -63,10 +74,10 @@ namespace MojBus.Helpers
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRouteTrip @StopName, @RouteShortName, @TripHeadSign, @Date;", sqlParams).ToList();
 
-            return Converters.StopDataEntityToModel(data);
+            return data.StopDataEntityToModel();
         }
 
-        public static List<RouteDataModel> RouteData(MojBusContext context, string routeShortName, DateTime date)
+        public static List<RouteDataModel> RouteData(this MojBusContext context, string routeShortName, DateTime date)
         {
             //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
@@ -76,18 +87,7 @@ namespace MojBus.Helpers
 
             List<RouteStopsEntity> data = context.Set<RouteStopsEntity>().FromSql("exec dbo.RouteStopTimes @RouteShortName, @Date;", sqlParams).ToList();
 
-            return Converters.RouteDataToModel(data);
-        }
-
-        public static object GetRoutes(MojBusContext context)
-        {
-            return from routes in context.Gtfsroutes
-                   select new
-                   {
-                       routes.RouteId,
-                       routes.RouteShortName,
-                       routes.RouteLongName
-                   };
+            return data.RouteDataToModel();
         }
     }
 }

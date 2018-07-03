@@ -1,14 +1,12 @@
 ﻿using MojBus.Data.Entities;
 using MojBus.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace MojBus.Helpers
+namespace MojBus.Extensions
 {
-    public class Converters
+    public static class Converters
     {
-        public static List<StopDataModel> StopDataEntityToModel(List<StopDataEntity> data)
+        public static List<StopDataModel> StopDataEntityToModel(this List<StopDataEntity> data)
         {
             StopDataModel previous = null;
             List<StopDataModel> mappedData = new List<StopDataModel>();
@@ -47,7 +45,7 @@ namespace MojBus.Helpers
             return mappedData;
         }
 
-        public static List<RouteDataModel> RouteDataToModel(List<RouteStopsEntity> data)
+        public static List<RouteDataModel> RouteDataToModel(this List<RouteStopsEntity> data)
         {
             return new List<RouteDataModel>();
         }

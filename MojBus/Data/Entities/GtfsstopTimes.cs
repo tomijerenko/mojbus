@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MojBus.Data.Entities
+﻿namespace MojBus.Data.Entities
 {
     public partial class GtfsstopTimes
     {
