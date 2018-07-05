@@ -14,10 +14,11 @@ namespace MojBus.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string stopName)
+        public IActionResult Index(string stopName, int directionId)
         {
             ViewData["StopName"] = stopName;
-            return View(_context.StopTimesForStop(stopName, DateTime.Now));
+            ViewData["DirectionId"] = directionId;
+            return View(_context.StopTimesForStop(stopName, directionId, DateTime.Now));
         }
 
         public IActionResult StopDataForRoute(string stopName, string routeShortName, string tripHeadSign)

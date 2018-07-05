@@ -8,17 +8,16 @@
         @foreach (var item in Model)
         {
             <li>
-                <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item.StopName })">
-                    @if (item.StopDirectionId == 0)
+                @* TODO: IS TRIP DIRECTION ID SAME AS STOP DIRECTION ID??????????????????? *@
+                <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item.StopName, directionId = item.StopDirectionId})">
+                    @if (item.StopDirectionId == 1)
                     {
                         <img src="images/DirectionUp.png" height="40" width="40"/>
                     }
-                    else if (item.StopDirectionId == 1)
+                    else
                     {
                         <img src="images/DirectionDown.png" height="40" width="40"/>
                     }
-                    else
-                    { }
                     @item.StopName
                 </a>
             </li>

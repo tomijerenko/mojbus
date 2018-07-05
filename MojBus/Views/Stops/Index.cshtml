@@ -6,7 +6,19 @@
 
 <div class="text-center">
     <h2>Vozni redi postaje @ViewData["StopName"]:</h2>
+    <h2>Smer voznje @ViewData["DirectionId"]:</h2>
 </div>
+
+<a class="btn btn-default " href="@Url.Action("Index","Stops", new { stopName = @ViewData["StopName"], directionId = (int)@ViewData["DirectionId"] == 1 ? 0 : 1})">
+    @if ((int)ViewData["DirectionId"] == 1)
+    {
+        <img src="images/DirectionUp.png" />
+    }
+    else
+    {
+        <img src="~/images/DirectionDown.png" />
+    }
+</a>
 
 <div>
     @foreach (var item in Model)
