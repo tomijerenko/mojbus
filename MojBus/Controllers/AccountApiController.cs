@@ -26,9 +26,20 @@ namespace MojBus.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
+                if (result.Succeeded)
+                {
+                    string userId = await _userManager.GetUserIdAsync(user);
+
+                    return Json(new
+                    {
+                        result.Succeeded,
+                        userId,
+                    });
+                }
+                
                 return Json(result);
             }
             
@@ -41,6 +52,18 @@ namespace MojBus.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    string userId = await _userManager.GetUserIdAsync(user);
+
+                    return Json(new
+                    {
+                        result.Succeeded,
+                        userId
+                    });
+                }
 
                 return Json(result);
             }

@@ -13,7 +13,7 @@ namespace MojBus.Extensions
     {
         public static object GetStops(this MojBusContext context)
         {
-            return from stops in context.Gtfsstops
+            return (from stops in context.Gtfsstops
                    select new
                    {
                        stops.StopId,
@@ -21,18 +21,18 @@ namespace MojBus.Extensions
                        stops.StopLat,
                        stops.StopLon,
                        stops.WeelchairBoarding
-                   };
+                   }).OrderBy(x=>x.StopName);
         }
 
         public static object GetRoutes(this MojBusContext context)
         {
-            return from routes in context.Gtfsroutes
+            return (from routes in context.Gtfsroutes
                    select new
                    {
                        routes.RouteId,
                        routes.RouteShortName,
                        routes.RouteLongName
-                   };
+                   }).OrderBy(x => x.RouteShortName);
         }
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, DateTime date)

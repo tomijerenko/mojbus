@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model List<Gtfsstops>
 @{
     ViewData["Title"] = "Default";
 }
@@ -8,7 +8,7 @@
         @foreach (var item in Model)
         {
             <li>
-                <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item })">@item</a>
+                <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item.StopName })">@item.StopName</a>
             </li>
         }
     </ul>

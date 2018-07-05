@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
+using MojBus.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace MojBus.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<string> stops = await _context.Gtfsstops.Select(x => x.StopName).Distinct().ToListAsync();
+            List<Gtfsstops> stops = await _context.Gtfsstops.OrderBy(x=>x.StopName).ToListAsync();
 
             return View(stops);
         }
