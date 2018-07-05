@@ -11,28 +11,14 @@ namespace MojBus.Extensions
 {
     public static class MojBusContextExtensions
     {
-        public static object GetStops(this MojBusContext context)
+        public static IQueryable<Gtfsstops> GetStops(this MojBusContext context)
         {
-            return (from stops in context.Gtfsstops
-                   select new
-                   {
-                       stops.StopId,
-                       stops.StopName,
-                       stops.StopLat,
-                       stops.StopLon,
-                       stops.WeelchairBoarding
-                   }).OrderBy(x=>x.StopName);
+            return context.Gtfsstops.OrderBy(x=>x.StopName).ThenBy(x=>x.StopDirectionId);
         }
 
-        public static object GetRoutes(this MojBusContext context)
+        public static IQueryable<Gtfsroutes> GetRoutes(this MojBusContext context)
         {
-            return (from routes in context.Gtfsroutes
-                   select new
-                   {
-                       routes.RouteId,
-                       routes.RouteShortName,
-                       routes.RouteLongName
-                   }).OrderBy(x => x.RouteShortName);
+            return context.Gtfsroutes.OrderBy(x => x.RouteShortName);
         }
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, DateTime date)

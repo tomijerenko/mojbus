@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
 using MojBus.Data.Entities;
+using MojBus.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MojBus.ViewComponents
@@ -19,7 +19,7 @@ namespace MojBus.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<Gtfsstops> stops = await _context.Gtfsstops.OrderBy(x=>x.StopName).ToListAsync();
+            List<Gtfsstops> stops = await _context.GetStops().ToListAsync();
 
             return View(stops);
         }

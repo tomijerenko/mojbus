@@ -14,5 +14,6 @@
         public int? WeelchairBoarding { get; set; }
         public int? AgencyId { get; set; }
         public string ExternalStopId { get; set; }
+        public int? StopDirectionId { get; set; }
     }
 }
