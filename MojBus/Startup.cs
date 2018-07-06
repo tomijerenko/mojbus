@@ -22,9 +22,6 @@ namespace MojBus
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Environment.GetEnvironmentVariable("mojbusconnectionstring")));
-
             services.AddDbContext<MojBusContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("mojbusconnectionstring")));
 
@@ -35,7 +32,7 @@ namespace MojBus
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<MojBusContext>()
                 .AddDefaultTokenProviders();
 
             services.AddTransient<IEmailSender, EmailSender>();

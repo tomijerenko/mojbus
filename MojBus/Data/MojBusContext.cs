@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MojBus.Data.Entities;
+using MojBus.Models;
 
 namespace MojBus.Data
 {
-    public partial class MojBusContext : DbContext
+    public class MojBusContext : IdentityDbContext<ApplicationUser>
     {
         public virtual DbSet<Gtfsagencies> Gtfsagencies { get; set; }
         public virtual DbSet<Gtfscalendar> Gtfscalendar { get; set; }
