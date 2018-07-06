@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
 using MojBus.Extensions;
 using System;
@@ -16,15 +17,16 @@ namespace MojBus.Controllers
 
         public IActionResult Index(string stopName, int directionId)
         {
+            _context.Database.Migrate();
             ViewData["StopName"] = stopName;
             ViewData["DirectionId"] = directionId;
             return View(_context.StopTimesForStop(stopName, directionId, DateTime.Now));
         }
 
-        public IActionResult StopDataForRoute(string stopName, string routeShortName, string tripHeadSign)
+        public IActionResult StopDataForRoute(string stopName, string routeShortName, int directionId)
         {
             ViewData["StopName"] = stopName;
-            return View(_context.StopTimesForStop(stopName, routeShortName, tripHeadSign, DateTime.Now));
+            return View(_context.StopTimesForStop(stopName, routeShortName, directionId, DateTime.Now));
         }
     }
 }

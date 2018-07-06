@@ -5,48 +5,58 @@
 }
 
 <div class="text-center">
-    <h2>Vozni redi postaje @ViewData["StopName"]:</h2>
-    <h2>Smer voznje @ViewData["DirectionId"]:</h2>
+    <h2>Odhodi linij iz postaje @ViewData["StopName"]:</h2>
 </div>
 
-<a class="btn btn-default " href="@Url.Action("Index","Stops", new { stopName = @ViewData["StopName"], directionId = (int)@ViewData["DirectionId"] == 1 ? 0 : 1})">
-    @if ((int)ViewData["DirectionId"] == 1)
-    {
-        <img src="images/DirectionUp.png" />
-    }
-    else
-    {
-        <img src="~/images/DirectionDown.png" />
-    }
-</a>
+<div class="text-center">
+    <a class="btn btn-default" href="@Url.Action("Index","Stops", new { stopName = @ViewData["StopName"], directionId = (int)@ViewData["DirectionId"] == 1 ? 0 : 1})">
+        @if ((int)ViewData["DirectionId"] == 1)
+        {
+            <img class="directionArrowImage" src="~/images/directionUp.svg" />
+        }
+        else
+        {
+            <img class="directionArrowImage" src="~/images/directionDown.svg" />
+        }
+    </a>
+</div>
 
 <div>
     @foreach (var item in Model)
     {
         @if (item != null)
         {
-            <a class="btn btn-default btn-block" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName, tripHeadSign = item.TripHeadsign })">
-                <div class="lineNumberContainer">
-                    <span>@item.TripShortName</span>
-                </div>
-                <div class="lineDataContainer">
-                    <div>
-                        @item.TripHeadsign
+            <div class="flex-container">
+                <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName, directionId = item.DirectionID })">
+                    <div class="lineNumberContainer pull-left text-center">
+                        <span>@item.TripShortName</span>
                     </div>
-                    <div>
-                        Smer voznje: @item.DirectionID
-                    </div>
-                    <div class="departureTime">
-                        @foreach (string departureTime in item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5))
-                        {
-                            <span>@departureTime</span>
-                        }
-                    </div>
-                </div>
-            </a>
-        }
 
+                    @{
+                        IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(10);
+                        if (departureTimes.Count() == 0)
+                        {
+                            <span>Danes ne vozi vec!</span>
+                        }
+                        else
+                        {
+                            <div class="departureTime">
+                                @foreach (string departureTime in departureTimes)
+                                {
+                                    <span>@departureTime</span>
+                                }
+                            </div>
+
+                        }
+                    }
+                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div onclick="" class="btn btn-default addToFavouritesButton">
+                        <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                    </div>
+                }
+            </div>
+        }
     }
 </div>
-
-

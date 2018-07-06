@@ -12,11 +12,11 @@
                 <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item.StopName, directionId = item.StopDirectionId})">
                     @if (item.StopDirectionId == 1)
                     {
-                        <img src="images/DirectionUp.png" height="40" width="40"/>
+                        <img class="searchBarArrowImage" src="~/images/directionUp.svg"/>
                     }
                     else
                     {
-                        <img src="images/DirectionDown.png" height="40" width="40"/>
+                        <img class="searchBarArrowImage" src="~/images/directionDown.svg"/>
                     }
                     @item.StopName
                 </a>

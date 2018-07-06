@@ -14,6 +14,7 @@ namespace MojBus.Data
         public virtual DbSet<Gtfstrips> Gtfstrips { get; set; }
         public virtual DbSet<StopDataEntity> StopData { get; set; }
         public virtual DbSet<RouteStopsEntity> RouteData { get; set; }
+        public virtual DbSet<FavouriteStopRoutes> FavouriteStopRoutes { get; set; }
 
         public MojBusContext(DbContextOptions<MojBusContext> options)
             : base(options)
@@ -209,6 +210,25 @@ namespace MojBus.Data
                 entity.Property(e => e.TripShortName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<FavouriteStopRoutes>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.RouteShortName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StopName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
             });
 
             base.OnModelCreating(modelBuilder);

@@ -1,6 +1,7 @@
 ﻿using MojBus.Data.Entities;
 using MojBus.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MojBus.Extensions
 {
@@ -45,9 +46,31 @@ namespace MojBus.Extensions
             return mappedData;
         }
 
-        public static List<RouteDataModel> RouteDataToModel(this List<RouteStopsEntity> data)
+        public static List<StopDataModel> GroupByTripShortName(this List<StopDataModel> data)
         {
-            return new List<RouteDataModel>();
+            if (data.First() == null)
+                return new List<StopDataModel>();
+
+            List<StopDataModel> temp = new List<StopDataModel>();
+            StopDataModel previous = null;
+
+            foreach (string distinctedTripShortName in data.Select(x=>x.TripShortName).Distinct())
+            {
+                foreach (StopDataModel item in data.Where(x=>x.TripShortName == distinctedTripShortName))
+                {
+                    if (previous == null)
+                    {
+                        previous = item;
+                        continue;
+                    }
+                    previous.DepartureTimes.AddRange(item.DepartureTimes);
+                }
+                previous.DepartureTimes = previous.DepartureTimes.OrderBy(x=>x).ToList();
+                temp.Add(previous);
+                previous = null;
+            }
+
+            return temp;
         }
     }
 }

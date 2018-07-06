@@ -47,7 +47,7 @@ namespace MojBus.Controllers
         [HttpGet]
         public IActionResult StopDataForRouteTrip(string stopName, string routeShortName, string tripHeadSign, DateTime date)
         {
-            return Json(_context.StopTimesForStop( stopName, routeShortName, tripHeadSign, date));
+            return Json(_context.StopTimesForStop(stopName, routeShortName, tripHeadSign, date));
         }
     }
 }
