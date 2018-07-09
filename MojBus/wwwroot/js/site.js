@@ -14,3 +14,35 @@
         }
     }
 }
+
+function ChangeFavourite(clickedItem, stopName, routeShortName, directionId) {
+    $.post(
+        "/Stops/AddToFavourite",
+        {
+            stopName,
+            routeShortName,
+            directionId
+        },
+        function (data, status) {
+            if (data)
+                $(clickedItem).html('<img class="favouritesStarImage" src="images/starRed.svg" />');
+            else
+                $(clickedItem).html('<img class="favouritesStarImage" src="images/starGray.svg" />');
+        }
+    );
+}
+
+function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
+    $.post(
+        "/Stops/AddToFavourite",
+        {
+            stopName,
+            routeShortName,
+            directionId
+        },
+        function (data, status) {            
+            if (!data)
+                $(clickedItem).parent().remove();
+        }
+    );
+}

@@ -7,7 +7,13 @@ namespace MojBus.Extensions
 {
     public static class Converters
     {
-        public static List<StopDataModel> StopDataEntityToModel(this List<StopDataEntity> data)
+        /// <summary>
+        /// Maps table like list StopDataEntity into object like representation StopDataModel.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="stopName"></param>
+        /// <returns></returns>
+        public static List<StopDataModel> StopDataEntityToModel(this List<StopDataEntity> data, string stopName)
         {
             StopDataModel previous = null;
             List<StopDataModel> mappedData = new List<StopDataModel>();
@@ -17,6 +23,7 @@ namespace MojBus.Extensions
                 {
                     previous = new StopDataModel()
                     {
+                        StopName = stopName,
                         TripShortName = item.TripShortName,
                         TripHeadsign = item.TripHeadsign,
                         DirectionID = item.DirectionID,
@@ -31,6 +38,7 @@ namespace MojBus.Extensions
                     mappedData.Add(previous);
                     previous = new StopDataModel()
                     {
+                        StopName = stopName,
                         TripShortName = item.TripShortName,
                         TripHeadsign = item.TripHeadsign,
                         DirectionID = item.DirectionID,
@@ -46,6 +54,11 @@ namespace MojBus.Extensions
             return mappedData;
         }
 
+        /// <summary>
+        /// Groups list of stops by their trip short name, merges and sorts their stop times.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static List<StopDataModel> GroupByTripShortName(this List<StopDataModel> data)
         {
             if (data.First() == null)
@@ -71,6 +84,22 @@ namespace MojBus.Extensions
             }
 
             return temp;
+        }
+
+        public static List<StopDataModel> AddFavouritesToStops(this List<StopDataModel> data, List<FavouriteStopRoutes> favourites)
+        {
+            foreach (StopDataModel stopData in data)
+            {
+                foreach (FavouriteStopRoutes route in favourites)
+                {
+                    if (stopData.TripShortName == route.RouteShortName)
+                    {
+                        stopData.isFavourite = true;
+                    }
+                }
+            }
+
+            return data;
         }
     }
 }

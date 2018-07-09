@@ -216,8 +216,6 @@ namespace MojBus.Data
 
             modelBuilder.Entity<FavouriteStopRoutes>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.RouteShortName)
                     .IsRequired()
                     .HasMaxLength(50)

@@ -5,3 +5,8 @@
     <h1>ISKANJE PO POSTAJAH</h1>
 </div>
 @await Component.InvokeAsync("Stops")
+
+@if (User.Identity.IsAuthenticated)
+{
+    @await Component.InvokeAsync("FavouriteStops")
+}

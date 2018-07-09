@@ -27,7 +27,7 @@
         @if (item != null)
         {
             <div class="flex-container">
-                <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = @ViewData["StopName"], routeShortName = item.TripShortName, directionId = item.DirectionID })">
+                <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID })">
                     <div class="lineNumberContainer pull-left text-center">
                         <span>@item.TripShortName</span>
                     </div>
@@ -52,8 +52,15 @@
                 </a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div onclick="" class="btn btn-default addToFavouritesButton">
-                        <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                    <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
+                        @if (item.isFavourite)
+                        {
+                            <img class="favouritesStarImage" src="~/images/starRed.svg" />
+                        }
+                        else
+                        {
+                            <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                        }
                     </div>
                 }
             </div>
