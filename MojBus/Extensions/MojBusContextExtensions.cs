@@ -2,6 +2,7 @@
 using MojBus.Data;
 using MojBus.Data.Entities;
 using MojBus.Models;
+using MojBus.Models.FavouriteStops;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -90,20 +91,49 @@ namespace MojBus.Extensions
                 .FavouriteStopRoutes
                 .Where(x => x.UserId == userId)
                 .ToList();
-            List<StopDataModel> temp = new List<StopDataModel>();
+            List<StopDataModel> stops = new List<StopDataModel>();
             DateTime date = DateTime.Now;
 
             if (favouriteStopRoutes.Count() == 0)
-                return temp;
+                return stops;
 
             foreach (FavouriteStopRoutes route in favouriteStopRoutes)
             {
-                temp.AddRange(context.StopTimesForStop(route.StopName, route.RouteShortName, route.DirectionId, date)
+                stops.AddRange(context.StopTimesForStop(route.StopName, route.RouteShortName, route.DirectionId, date)
                     .GroupByTripShortName()
                     .ToList());
             }
 
-            return temp;
+            return stops;
+        }
+
+        public static bool AddStopRouteToFavourites(this MojBusContext context, FavouriteStopRouteModel favouriteStop)
+        {
+            bool isAdded = false;
+            var result = context.FavouriteStopRoutes.Where(x => x.UserId == favouriteStop.UserId
+            && x.DirectionId == favouriteStop.DirectionId
+            && x.StopName == favouriteStop.StopName
+            && x.RouteShortName == favouriteStop.RouteShortName).ToList();
+
+            if (result.Count != 0)
+            {
+                context.FavouriteStopRoutes.RemoveRange(result);
+                isAdded = false;
+            }
+            else
+            {
+                context.FavouriteStopRoutes.Add(new FavouriteStopRoutes()
+                {
+                    UserId = favouriteStop.UserId,
+                    RouteShortName = favouriteStop.RouteShortName,
+                    StopName = favouriteStop.StopName,
+                    DirectionId = favouriteStop.DirectionId
+                });
+                isAdded = true;
+            }
+            context.SaveChanges();
+
+            return isAdded;
         }
 
         //old api methods

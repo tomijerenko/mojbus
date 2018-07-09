@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MojBus.Data;
 using MojBus.Extensions;
+using MojBus.Models.FavouriteStops;
 using System;
 
 namespace MojBus.Controllers
@@ -49,5 +50,36 @@ namespace MojBus.Controllers
         {
             return Json(_context.StopTimesForStop(stopName, routeShortName, tripHeadSign, date));
         }
+
+        //new api methods
+        [HttpGet]
+        public IActionResult RoutesWithDepartureTimesForStop(string stopName, int directionId, DateTime date)
+        {
+            return Json(_context.StopTimesForStop(stopName, directionId, date));
+        }
+
+        [HttpGet]
+        public IActionResult RouteDepartureTimesForStop(string stopName, string routeShortName, int directionId, DateTime date)
+        {
+            return Json(_context.StopTimesForStop(stopName, routeShortName, directionId, date));
+        }
+
+        [HttpGet]
+        public IActionResult StopDataLoggedIn(string stopName, int directionId, string userId, DateTime date)
+        {
+            return Json(_context.StopTimesForStopLoggedIn(stopName, directionId, userId, date));
+        }
+
+        [HttpGet]
+        public IActionResult GetFavouriteStopRouteData(string userId)
+        {
+            return Json(_context.GetFavouriteStopsLoggedIn(userId));
+        }
+
+        [HttpPost]
+        public IActionResult AddStopRouteToFavourites(FavouriteStopRouteModel favouriteStop)
+        {
+            return Json(_context.AddStopRouteToFavourites(favouriteStop));
+        }        
     }
 }

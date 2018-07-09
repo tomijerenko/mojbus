@@ -74,6 +74,7 @@ namespace MojBus.Extensions
                     if (previous == null)
                     {
                         previous = item;
+                        previous.TripHeadsign = "";
                         continue;
                     }
                     previous.DepartureTimes.AddRange(item.DepartureTimes);
