@@ -68,8 +68,8 @@ namespace MojBus.Extensions
 
             List<FavouriteStopRoutes> favouriteStopRoutes = context
                 .FavouriteStopRoutes
-                .Where(x => x.UserId == userId 
-                && x.StopName == stopName 
+                .Where(x => x.UserId == userId
+                && x.StopName == stopName
                 && x.DirectionId == directionId)
                 .ToList();
             List<StopDataEntity> data = context
@@ -83,7 +83,7 @@ namespace MojBus.Extensions
                 .OrderBy(x => x.TripShortName)
                 .ToList()
                 .AddFavouritesToStops(favouriteStopRoutes);
-        }        
+        }
 
         public static List<StopDataModel> GetFavouriteStopsLoggedIn(this MojBusContext context, string userId)
         {
@@ -103,6 +103,7 @@ namespace MojBus.Extensions
                     .GroupByTripShortName()
                     .ToList());
             }
+            stops.ForEach(x => { x.isFavourite = true; });
 
             return stops;
         }
