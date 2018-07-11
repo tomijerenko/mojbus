@@ -86,7 +86,10 @@ namespace MojBus.Controllers
         [HttpPost]
         public IActionResult AddStopRouteToFavourites([FromBody]FavouriteStopRouteModel favouriteStop)
         {
-            return Json(_context.AddStopRouteToFavourites(favouriteStop));
+            return Json(new
+            {
+                succeeded = _context.AddStopRouteToFavourites(favouriteStop)
+            });
         }
 
         [HttpGet]
