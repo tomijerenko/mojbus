@@ -2,7 +2,7 @@
 
 namespace MojBus.Models
 {
-    public class RouteDataModel
+    public class RouteStopsModel
     {
         public int TripID { get; set; }
         public int DirectionID { get; set; }

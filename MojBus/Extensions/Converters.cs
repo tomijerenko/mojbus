@@ -67,9 +67,9 @@ namespace MojBus.Extensions
             List<StopDataModel> temp = new List<StopDataModel>();
             StopDataModel previous = null;
 
-            foreach (string distinctedTripShortName in data.Select(x=>x.TripShortName).Distinct())
+            foreach (string distinctedTripShortName in data.Select(x => x.TripShortName).Distinct())
             {
-                foreach (StopDataModel item in data.Where(x=>x.TripShortName == distinctedTripShortName))
+                foreach (StopDataModel item in data.Where(x => x.TripShortName == distinctedTripShortName))
                 {
                     if (previous == null)
                     {
@@ -79,7 +79,7 @@ namespace MojBus.Extensions
                     }
                     previous.DepartureTimes.AddRange(item.DepartureTimes);
                 }
-                previous.DepartureTimes = previous.DepartureTimes.OrderBy(x=>x).ToList();
+                previous.DepartureTimes = previous.DepartureTimes.OrderBy(x => x).ToList();
                 temp.Add(previous);
                 previous = null;
             }
@@ -101,6 +101,41 @@ namespace MojBus.Extensions
             }
 
             return data;
+        }
+
+        public static List<RouteStopsModel> RouteStopsEntityToModel(this List<RouteStopsEntity> data)
+        {
+            List<RouteStopsModel> routeStops = new List<RouteStopsModel>();
+
+            if (data.First() == null)
+                return routeStops;
+
+            foreach (int tripId in data.Select(x => x.TripID).Distinct())
+            {
+                IEnumerable<RouteStopsEntity> routeStopsFiltered = data.Where(x => x.TripID == tripId);
+                List<StopTimeData> stopTimes = new List<StopTimeData>();
+
+                foreach (RouteStopsEntity routeStop in routeStopsFiltered)
+                {
+                    stopTimes.Add(new StopTimeData()
+                    {
+                        DepartureTime = routeStop.DepartureTime.Trim(),
+                        StopName = routeStop.StopName,
+                        StopSequence = routeStop.StopSequence
+                    });
+                }
+
+                routeStops.Add(new RouteStopsModel()
+                {
+                    TripID = tripId,
+                    DirectionID = routeStopsFiltered.First().DirectionID,
+                    Stops = stopTimes.OrderBy(x=>x.StopSequence).ToList()
+                });
+            }
+
+            return routeStops
+                .OrderBy(x => x.Stops.First().DepartureTime)
+                .ToList();
         }
     }
 }

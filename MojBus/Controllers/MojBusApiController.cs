@@ -87,6 +87,12 @@ namespace MojBus.Controllers
         public IActionResult AddStopRouteToFavourites([FromBody]FavouriteStopRouteModel favouriteStop)
         {
             return Json(_context.AddStopRouteToFavourites(favouriteStop));
-        }        
+        }
+
+        [HttpGet]
+        public IActionResult RouteStopsData(string routeShortName, DateTime date)
+        {
+            return Json(_context.RouteStopTimes(routeShortName, date));
+        }
     }
 }

@@ -85,6 +85,23 @@ namespace MojBus.Extensions
                 .AddFavouritesToStops(favouriteStopRoutes);
         }
 
+        public static List<RouteStopsModel> RouteStopTimes(this MojBusContext context, string routeShortName, DateTime date)
+        {
+            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
+            object[] sqlParams = {
+                new SqlParameter("@RouteShortName", routeShortName),
+                new SqlParameter("@Date", "20180601")
+            };
+
+            List<RouteStopsEntity> data = context
+                .Set<RouteStopsEntity>()
+                .FromSql("exec dbo.RouteStopTimes @RouteShortName, @Date;", sqlParams)
+                .ToList();  
+
+            return data
+                .RouteStopsEntityToModel();
+        }
+
         public static List<StopDataModel> GetFavouriteStopsLoggedIn(this MojBusContext context, string userId)
         {
             List<FavouriteStopRoutes> favouriteStopRoutes = context
