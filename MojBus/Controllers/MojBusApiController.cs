@@ -3,6 +3,7 @@ using MojBus.Data;
 using MojBus.Extensions;
 using MojBus.Models.FavouriteStops;
 using System;
+using System.Linq;
 
 namespace MojBus.Controllers
 {
@@ -74,6 +75,12 @@ namespace MojBus.Controllers
         public IActionResult GetFavouriteStopRouteData(string userId)
         {
             return Json(_context.GetFavouriteStopsLoggedIn(userId));
+        }
+
+        [HttpGet]
+        public IActionResult Lines()
+        {
+            return Json(_context.Gtfslines.ToList());
         }
 
         [HttpPost]

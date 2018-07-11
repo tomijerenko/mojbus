@@ -17,6 +17,7 @@ namespace MojBus.Data
         public virtual DbSet<StopDataEntity> StopData { get; set; }
         public virtual DbSet<RouteStopsEntity> RouteData { get; set; }
         public virtual DbSet<FavouriteStopRoutes> FavouriteStopRoutes { get; set; }
+        public virtual DbSet<Gtfslines> Gtfslines { get; set; }
 
         public MojBusContext(DbContextOptions<MojBusContext> options)
             : base(options)
@@ -229,6 +230,28 @@ namespace MojBus.Data
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
+            });
+
+            modelBuilder.Entity<Gtfslines>(entity =>
+            {
+                entity.HasKey(e => e.LineId);
+
+                entity.ToTable("GTFSLines");
+
+                entity.Property(e => e.LineId).HasColumnName("LineID");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Htmlcolor)
+                    .HasColumnName("HTMLColor")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TripShortName)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
             });
 
             base.OnModelCreating(modelBuilder);
