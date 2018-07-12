@@ -103,6 +103,50 @@ namespace MojBus.Extensions
             return data;
         }
 
+        public static List<StopTimes> RouteStopsEntityToStopTimesModel(this List<RouteStopsEntity> data)
+        {
+            List<StopTimes> routeStops = new List<StopTimes>();
+
+            if (data.First() == null)
+                return routeStops;
+
+            int counter = 1;
+            var groupedById = data.GroupBy(x => x.TripID).ToList();
+            var distinctedStops = data.Select(x => x.StopName).Distinct().ToList();
+
+            groupedById.ForEach(x => x.GroupBy(y => y.StopSequence));
+
+            //TODO: FIND CORRECT ORDER FOR STOPS???
+            foreach (var key in groupedById.ToList())
+            {
+                for (int i = 0; i < key.Count(); i++)
+                {
+                    string tempStopName = key.ElementAt(i).StopName;
+                    if (distinctedStops[i] == tempStopName)
+                        continue;
+                    distinctedStops.Insert(i, tempStopName);
+                    distinctedStops.Remove(tempStopName);
+                }
+            }
+
+            foreach (string stopName in distinctedStops)
+            {
+                routeStops.Add(new StopTimes()
+                {
+                    StopId = data.First(x => x.StopName == stopName).Id,
+                    StopName = stopName,
+                    DepartureTimes = data
+                    .Where(x => x.StopName == stopName)
+                    .Select(x => x.DepartureTime.Trim())
+                    .OrderBy(x => x)
+                    .ToList()
+                });
+                counter++;
+            }
+
+            return routeStops;
+        }
+
         public static List<RouteStopsModel> RouteStopsEntityToModel(this List<RouteStopsEntity> data)
         {
             List<RouteStopsModel> routeStops = new List<RouteStopsModel>();
@@ -129,7 +173,7 @@ namespace MojBus.Extensions
                 {
                     TripID = tripId,
                     DirectionID = routeStopsFiltered.First().DirectionID,
-                    Stops = stopTimes.OrderBy(x=>x.StopSequence).ToList()
+                    Stops = stopTimes.OrderBy(x => x.StopSequence).ToList()
                 });
             }
 

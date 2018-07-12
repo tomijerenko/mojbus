@@ -97,5 +97,11 @@ namespace MojBus.Controllers
         {
             return Json(_context.RouteStopTimes(routeShortName, date));
         }
+
+        [HttpGet]
+        public IActionResult RouteStopsDataForDirection(string routeShortName, int directionId, DateTime date)
+        {
+            return Json(_context.RouteStopTimes(routeShortName, directionId, date));
+        }
     }
 }

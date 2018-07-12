@@ -2,6 +2,14 @@
 
 namespace MojBus.Models
 {
+    public class StopTimes
+    {
+        public int StopSequence { get; set; }
+        public long StopId { get; set; }
+        public string StopName { get; set; }
+        public List<string> DepartureTimes { get; set; }
+    }
+
     public class RouteStopsModel
     {
         public int TripID { get; set; }
