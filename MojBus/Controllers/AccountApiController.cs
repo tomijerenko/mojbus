@@ -44,12 +44,13 @@ namespace MojBus.Controllers
 
                 if (result.Succeeded)
                 {
-                    ApplicationUser user = await _userManager.GetUserAsync(User);
+                    ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    string userId = await _userManager.GetUserIdAsync(user);
 
                     return Json(new
                     {
                         result.Succeeded,
-                        userId = user.Id
+                        userId
                     });
                 }
 
