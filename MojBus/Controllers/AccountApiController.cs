@@ -38,15 +38,13 @@ namespace MojBus.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginApiModel model)
         {
-            await _signInManager.SignOutAsync();
-
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                 if (result.Succeeded)
                 {
-                    ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+                    ApplicationUser user = await _userManager.GetUserAsync(User);
 
                     return Json(new
                     {
