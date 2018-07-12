@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MojBus.Models;
@@ -43,10 +44,9 @@ namespace MojBus.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                 if (result.Succeeded)
-                {
-                    ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                    string userId = await _userManager.GetUserIdAsync(user);
-
+                {                    
+                    string userId = _userManager.Users.FirstOrDefault(x => x.Email == model.Email).Id;
+                    
                     return Json(new
                     {
                         result.Succeeded,
