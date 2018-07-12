@@ -28,16 +28,18 @@ namespace MojBus.Controllers
             {
                 ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                
+
                 return Json(result);
             }
-            
+
             return Json(ModelState);
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginApiModel model)
         {
+            await _signInManager.SignOutAsync();
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
