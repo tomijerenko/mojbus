@@ -28,17 +28,6 @@ namespace MojBus.Controllers
             {
                 ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    string userId = await _userManager.GetUserIdAsync(user);
-
-                    return Json(new
-                    {
-                        result.Succeeded,
-                        userId,
-                    });
-                }
                 
                 return Json(result);
             }
@@ -55,13 +44,12 @@ namespace MojBus.Controllers
 
                 if (result.Succeeded)
                 {
-                    ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                    string userId = await _userManager.GetUserIdAsync(user);
+                    ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
 
                     return Json(new
                     {
                         result.Succeeded,
-                        userId
+                        userId = user.Id
                     });
                 }
 
