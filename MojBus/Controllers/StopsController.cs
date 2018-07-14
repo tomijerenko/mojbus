@@ -21,27 +21,40 @@ namespace MojBus.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(string stopName, int directionId)
+        public async Task<IActionResult> Index(string stopName, int directionId, DateTime date)
         {
-            ViewData["StopName"] = stopName;
-            ViewData["DirectionId"] = directionId;
-
+            StopTimetable timetable = new StopTimetable()
+            {
+                StopName = stopName,
+                DirectionId = directionId,
+                RequestedDate = date == DateTime.MinValue ? DateTime.Now : date,
+            };
 
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+                timetable.StopTimetables = _context.StopTimesForStopLoggedIn(stopName, directionId, user.Id, timetable.RequestedDate);
 
-                return View(_context.StopTimesForStopLoggedIn(stopName, directionId, user.Id, DateTime.Now));
-            }                
+                return View(timetable);
+            }
 
-            return View(_context.StopTimesForStop(stopName, directionId, DateTime.Now));
+            timetable.StopTimetables = _context.StopTimesForStop(stopName, directionId, timetable.RequestedDate);
+
+            return View(timetable);
         }
 
-        public IActionResult StopDataForRoute(string stopName, string routeShortName, int directionId)
+        public IActionResult Timetable(string stopName, string routeShortName, int directionId, DateTime date)
         {
-            ViewData["StopName"] = stopName;            
+            StopTimetable timetable = new StopTimetable()
+            {
+                StopName = stopName,
+                DirectionId = directionId,
+                RouteShortName = routeShortName,
+                RequestedDate = date == DateTime.MinValue ? DateTime.Now : date,
+            };
+            timetable.StopTimetables = _context.StopTimesForStop(stopName, routeShortName, directionId, timetable.RequestedDate);
 
-            return View(_context.StopTimesForStop(stopName, routeShortName, directionId, DateTime.Now));
+            return View(timetable);
         }
 
         [Authorize]
@@ -49,7 +62,7 @@ namespace MojBus.Controllers
         public async Task<IActionResult> AddToFavourite(FavouriteStopRouteModel favouriteStop)
         {
             ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
-            favouriteStop.UserId = user.Id;          
+            favouriteStop.UserId = user.Id;
 
             return Json(_context.AddStopRouteToFavourites(favouriteStop));
         }

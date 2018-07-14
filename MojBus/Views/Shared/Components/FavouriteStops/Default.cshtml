@@ -1,7 +1,7 @@
 ﻿@model List<StopDataModel>
 @{
     ViewData["Title"] = "Default";
-    DateTime time = DateTime.Now;
+    DateTime currentDate = DateTime.Now;
 }
 
 @if (Model.Count() != 0)
@@ -16,27 +16,27 @@
             @if (item != null)
             {
                 <div class="flex-container">
-                    <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("StopDataForRoute", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID })">
-                        <div class="lineNumberContainer pull-left text-center">
-                            <span>@item.TripShortName</span>
-                            <div>
-                                <span>@item.StopName</span>
-                                @if (item.DirectionID == 1)
-                                {
-                                    <img class="searchBarArrowImage" src="~/images/directionUp.svg" />
-                                }
-                                else
-                                {
-                                    <img class="searchBarArrowImage" src="~/images/directionDown.svg" />
-                                }
-                            </div>                            
+                    <a class="btn btn-default btn-block departureDataContainer"
+                       href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2") })">
+                        <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
+                            <span class="tripShortName">@item.TripShortName</span>
                         </div>
-
+                        <div class="pull-left text-center">
+                            <span>@item.StopName</span>
+                            @if (item.DirectionID == 1)
+                            {
+                                <img class="searchBarArrowImage" src="~/images/awayFromCity.svg" />
+                            }
+                            else
+                            {
+                                <img class="searchBarArrowImage" src="~/images/toCity.svg" />
+                            }
+                        </div>
                         @{
-                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(10);
+                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(10);
                             if (departureTimes.Count() == 0)
                             {
-                                <span>Danes ne vozi vec!</span>
+                                <span>Od trenutne ure naprej ne vozi vec!</span>
                             }
                             else
                             {

@@ -19,11 +19,10 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, int directionId, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@DirectionId", directionId),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<StopDataEntity> data = context
@@ -40,12 +39,11 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, string routeShortName, int directionId, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@RouteShortName", routeShortName),
                 new SqlParameter("@DirectionId", directionId),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<StopDataEntity> data = context
@@ -59,11 +57,10 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStopLoggedIn(this MojBusContext context, string stopName, int directionId, string userId, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@DirectionId", directionId),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<FavouriteStopRoutes> favouriteStopRoutes = context
@@ -87,10 +84,9 @@ namespace MojBus.Extensions
 
         public static List<StopTimes> RouteStopTimes(this MojBusContext context, string routeShortName, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@RouteShortName", routeShortName),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<RouteStopsEntity> data = context
@@ -104,11 +100,10 @@ namespace MojBus.Extensions
 
         public static List<StopTimes> RouteStopTimes(this MojBusContext context, string routeShortName, int directionId, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@RouteShortName", routeShortName),
                 new SqlParameter("@DirectionId", directionId),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<RouteStopsEntity> data = context
@@ -180,10 +175,9 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStation @StopName, @Date;", sqlParams).ToList();
@@ -193,11 +187,10 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, string routeShortName, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@RouteShortName", routeShortName),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRoute @StopName, @RouteShortName, @Date;", sqlParams).ToList();
@@ -207,12 +200,11 @@ namespace MojBus.Extensions
 
         public static List<StopDataModel> StopTimesForStop(this MojBusContext context, string stopName, string routeShortName, string tripHeadSign, DateTime date)
         {
-            //TODO: CHANGE DATE TO CURRENT DATE - data in DB not up to date yet
             object[] sqlParams = {
                 new SqlParameter("@StopName", stopName),
                 new SqlParameter("@RouteShortName", routeShortName),
                 new SqlParameter("@TripHeadSign", tripHeadSign),
-                new SqlParameter("@Date", "20180601")
+                new SqlParameter("@Date", date)
             };
 
             List<StopDataEntity> data = context.Set<StopDataEntity>().FromSql("exec dbo.TripsWithTimesForStationAndRouteTrip @StopName, @RouteShortName, @TripHeadSign, @Date;", sqlParams).ToList();

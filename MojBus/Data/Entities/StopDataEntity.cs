@@ -9,6 +9,7 @@ namespace MojBus.Data.Entities
         public string TripHeadsign { get; set; }
         public int DirectionID { get; set; }
         public int RouteId { get; set; }
+        public string HTMLColor { get; set; }
         public string DepartureTime { get; set; }
     }
 }

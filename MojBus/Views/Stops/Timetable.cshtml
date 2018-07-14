@@ -1,15 +1,21 @@
-﻿@model List<StopDataModel>
+﻿@model StopTimetable
 @{
-    ViewData["Title"] = "StopDataForRouteTrip";
+    ViewData["Title"] = "Timetable";
     string tempTime = "0";
 }
 
 <div class="text-center">
-    <h1>Linijski vozni red za postajo @ViewData["StopName"]:</h1>
+    <h1>Linijski vozni red za postajo @Model.StopName:</h1>
 </div>
 
+<input id="timetableDate"
+       onchange="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId })')" 
+       type="date" 
+       name="timetableDate"
+       value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))">
+
 <div class="text-center">
-    @foreach (var item in Model)
+    @foreach (var item in Model.StopTimetables)
     {
         @if (item != null)
         {

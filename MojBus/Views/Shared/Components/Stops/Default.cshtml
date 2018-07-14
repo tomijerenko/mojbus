@@ -1,6 +1,7 @@
 ﻿@model List<Gtfsstops>
 @{
     ViewData["Title"] = "Default";
+    DateTime currentDate = DateTime.Now;
 }
 <div class="btn-group searchBar center-block">
     <input id="filterInput" class="form-control dropdown-toggle" onkeyup="filterMenu()" data-toggle="dropdown" placeholder="Search..." />
@@ -8,15 +9,20 @@
         @foreach (var item in Model)
         {
             <li>
-                @* TODO: IS TRIP DIRECTION ID SAME AS STOP DIRECTION ID??????????????????? *@
-                <a class="dropdown-item" href="@Url.Action("Index","Stops", new { stopName = item.StopName, directionId = item.StopDirectionId})">
+                <a class="dropdown-item"
+                   href="@Url.Action("Index","Stops",new
+                    {
+                        stopName = item.StopName,
+                        directionId = item.StopDirectionId,
+                        date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2")
+                    })">
                     @if (item.StopDirectionId == 1)
                     {
-                        <img class="searchBarArrowImage" src="~/images/directionUp.svg"/>
+                        <img class="searchBarArrowImage" src="~/images/awayFromCity.svg"/>
                     }
                     else
                     {
-                        <img class="searchBarArrowImage" src="~/images/directionDown.svg"/>
+                        <img class="searchBarArrowImage" src="~/images/toCity.svg"/>
                     }
                     @item.StopName
                 </a>

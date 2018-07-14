@@ -40,9 +40,13 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
             routeShortName,
             directionId
         },
-        function (data, status) {            
+        function (data, status) {
             if (!data)
                 $(clickedItem).parent().remove();
         }
     );
+}
+
+function navigateWithDate(requestedUri) {
+    window.location.href = requestedUri + '&date=' + $('#timetableDate').val(); 
 }

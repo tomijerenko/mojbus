@@ -23,6 +23,7 @@ namespace MojBus.Extensions
                 {
                     previous = new StopDataModel()
                     {
+                        HTMLColor = item.HTMLColor,
                         StopName = stopName,
                         TripShortName = item.TripShortName,
                         TripHeadsign = item.TripHeadsign,
@@ -38,6 +39,7 @@ namespace MojBus.Extensions
                     mappedData.Add(previous);
                     previous = new StopDataModel()
                     {
+                        HTMLColor = item.HTMLColor,
                         StopName = stopName,
                         TripShortName = item.TripShortName,
                         TripHeadsign = item.TripHeadsign,
