@@ -18,15 +18,20 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand absoluteCenterNavbar">
+                <div>
+                    <span class="moj">Moj</span>
+                    <span class="bus">Bus</span>
+                </div>
+            </a>
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MojBus</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -42,11 +47,11 @@
         <footer>
             <p>&copy; 2018 - MojBus</p>
             <p>
-                Project available at GitHub: 
+                Project available at GitHub:
                 <a href="https://github.com/1tomy1/mojbus">
                     https://github.com/1tomy1/mojbus
                 </a>
-            </p>            
+            </p>
         </footer>
     </div>
 
