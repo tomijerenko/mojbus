@@ -92,16 +92,24 @@
     background-color: #B8353D;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: white;
+.navbar-inverse {
+    border: none;
 }
 
-.navbar-inverse .navbar-toggle {
-    border-color: transparent;
-}
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+    }
 
-    .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-        background-color: rgba(255, 255, 255, 0.2);
+    .navbar-inverse .navbar-toggle {
+        border-color: transparent;
+    }
+
+        .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+        border-color:white;
     }
 
 .moj {
@@ -133,4 +141,18 @@
     margin-top: 1px;
     background: #f2f2f2;
     border-radius: 0px 0px 10px 10px;
+}
+.between {
+    margin-top: 1px;
+    background: #f2f2f2;
+    border-radius: 0px;
+}
+
+.hamburgerMenuButton {
+    margin-left:15px;
+}
+
+.forgottenPassEmail {
+    background: #f2f2f2;
+    border-radius: 10px;
 }
