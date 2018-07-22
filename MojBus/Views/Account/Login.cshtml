@@ -15,7 +15,7 @@
                 <h2>Prijava v aplikacijo</h2>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="Email" class="form-control emailLoginInput" placeholder="E-mail"/>
+                    <input asp-for="Email" class="form-control emailLoginInput" placeholder="E-mail" />
                     <input asp-for="Password" placeholder="Geslo" class="form-control passwordLoginInput" />
                 </div>
                 <div class="form-group">
@@ -23,13 +23,19 @@
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
+                        <a asp-action="ForgotPassword">Pozabljeno geslo?</a>
                     </p>
                     <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Registriraj se kot nov uporabnik?</a>
                     </p>
                 </div>
             </form>
+            <a class="btn btn-block btn-social btn-facebook">
+                <span class="fab fa-facebook-f"></span> Prijava z računom Facebook
+            </a>
+            <a class="btn btn-block btn-social btn-google">
+                <span class="fab fa-google"></span> Prijava z računom Google
+            </a>
         </section>
     </div>
     @*TODO: FACEBOOK, GOOGLE LOGIN!!!!!!

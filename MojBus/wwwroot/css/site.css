@@ -156,3 +156,12 @@
     background: #f2f2f2;
     border-radius: 10px;
 }
+
+.navbar-inverse .btn-link {
+    color: white;
+    text-decoration:none;
+}
+
+.navbar-right {
+    margin-right:0;
+}
