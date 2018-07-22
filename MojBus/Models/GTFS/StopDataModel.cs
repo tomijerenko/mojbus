@@ -9,6 +9,7 @@ namespace MojBus.Models
         public string StopName { get; set; }
         public string RouteShortName { get; set; }
         public DateTime RequestedDate { get; set; }
+        public List<StopLocationModel> RouteStopLocations { get; set; }
         public StopLocationModel StopLocation { get; set; }
         public List<StopDataModel> StopTimetables { get; set; }
     }

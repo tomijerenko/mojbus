@@ -187,5 +187,17 @@ namespace MojBus.Extensions
                 .OrderBy(x => x.Stops.First().DepartureTime)
                 .ToList();
         }
+
+        public static List<StopLocationModel> ConvertToRouteStopsDistinctedByStops(this List<RouteStopsEntity> data)
+        {
+            List<StopLocationModel> StopLocationsForRoute = new List<StopLocationModel>();
+
+            foreach (var item in data.Select(x => new { x.StopLat, x.StopLon }).Distinct())
+            {
+                StopLocationsForRoute.Add(new StopLocationModel() { StopLat = item.StopLat, StopLon = item.StopLon });
+            }
+            
+            return StopLocationsForRoute;
+        }
     }
 }

@@ -45,6 +45,10 @@
     }
 </div>
 
+<script>
+    stopsArray = @Html.Raw(Json.Serialize(Model.RouteStopLocations));
+</script>
+
 @section Scripts {
     @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
 }

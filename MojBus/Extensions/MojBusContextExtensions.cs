@@ -176,6 +176,23 @@ namespace MojBus.Extensions
             return model;
         }
 
+        public static List<StopLocationModel> GetAllStopsForRoute(this MojBusContext context, string routeShortName, int directionId, DateTime date)
+        {
+            object[] sqlParams = {
+                new SqlParameter("@RouteShortName", routeShortName),
+                new SqlParameter("@DirectionId", directionId),
+                new SqlParameter("@Date", date)
+            };
+
+            List<RouteStopsEntity> data = context
+                .Set<RouteStopsEntity>()
+                .FromSql("exec dbo.RouteStopTimesForDirectionId @RouteShortName, @DirectionId, @Date;", sqlParams)
+                .ToList();
+
+            return data
+                .ConvertToRouteStopsDistinctedByStops();
+        }
+
         //old api methods
         public static IQueryable<Gtfsroutes> GetRoutes(this MojBusContext context)
         {
