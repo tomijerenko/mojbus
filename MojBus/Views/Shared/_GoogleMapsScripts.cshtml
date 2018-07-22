@@ -1,0 +1,6 @@
+﻿@model StopLocationModel
+<script>
+    window.lat = @Model.StopLat;
+    window.lng = @Model.StopLon;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhAe8xjNEFswSLbZzvUqbNFItC1an8e70&callback=initMap" async defer></script>

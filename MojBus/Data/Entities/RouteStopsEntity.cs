@@ -13,5 +13,7 @@ namespace MojBus.Data.Entities
         public string StopName { get; set; }
         public int StopSequence { get; set; }
         public int TripID { get; set; }
+        public double StopLon { get; set; }
+        public double StopLat { get; set; }
     }
 }

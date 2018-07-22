@@ -50,3 +50,21 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 function navigateWithDate(requestedUri) {
     window.location.href = requestedUri + '&date=' + $('#timetableDate').val(); 
 }
+
+var map;
+var lat;
+var lng;
+
+function initMap() {
+    console.log(lat);
+    console.log(lng);
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: lat, lng: lng },
+        zoom: 17
+    });
+    var marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: map,
+        title: 'Hello World!'
+    });
+}

@@ -8,9 +8,11 @@
     <h1>Linijski vozni red za postajo @Model.StopName:</h1>
 </div>
 
+<div id="map"></div>
+
 <input id="timetableDate"
-       onchange="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId })')" 
-       type="date" 
+       onchange="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId })')"
+       type="date"
        name="timetableDate"
        value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))">
 
@@ -42,3 +44,7 @@
         }
     }
 </div>
+
+@section Scripts {
+    @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
+}

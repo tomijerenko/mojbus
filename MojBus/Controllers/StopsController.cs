@@ -27,6 +27,7 @@ namespace MojBus.Controllers
             {
                 StopName = stopName,
                 DirectionId = directionId,
+                StopLocation = _context.GetStopLocation(stopName, directionId),
                 RequestedDate = date == DateTime.MinValue ? DateTime.Now : date,
             };
 
@@ -50,6 +51,7 @@ namespace MojBus.Controllers
                 StopName = stopName,
                 DirectionId = directionId,
                 RouteShortName = routeShortName,
+                StopLocation = _context.GetStopLocation(stopName, directionId),
                 RequestedDate = date == DateTime.MinValue ? DateTime.Now : date,
             };
             timetable.StopTimetables = _context.StopTimesForStop(stopName, routeShortName, directionId, timetable.RequestedDate);

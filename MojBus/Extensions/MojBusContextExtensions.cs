@@ -167,6 +167,15 @@ namespace MojBus.Extensions
             return isAdded;
         }
 
+        public static StopLocationModel GetStopLocation(this MojBusContext context, string stopName, int directionId)
+        {
+            StopLocationModel model = new StopLocationModel();
+            var data = context.Gtfsstops.Where(x => x.StopName == stopName && x.StopDirectionId == directionId).FirstOrDefault();
+            if (data != null)
+                model = new StopLocationModel() { StopLat = data.StopLat, StopLon = data.StopLon };
+            return model;
+        }
+
         //old api methods
         public static IQueryable<Gtfsroutes> GetRoutes(this MojBusContext context)
         {
