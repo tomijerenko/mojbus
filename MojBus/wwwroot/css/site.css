@@ -56,6 +56,7 @@ footer {
 .lineNumberContainer {
     width: 50px;
     font-size: 2em;
+    margin-right: 5px;
 }
 
 .tripShortName {
@@ -191,7 +192,8 @@ footer {
 }
 
 .stopNameTextHeader {
-    font-size:2.4em;
+    padding-top:5px;
+    font-size:2em;
     width:100%;
 }
 
@@ -231,6 +233,6 @@ footer {
     width: 2.5em;
 }
 
-.favouriteStopName {
-    padding-left:5px;
+#filterList {
+    margin-top: -17px;
 }
