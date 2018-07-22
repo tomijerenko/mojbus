@@ -3,32 +3,28 @@
     ViewData["Title"] = "Index";
     DateTime time = DateTime.Now;
 }
-
-<div class="text-center">
-    <h2>Odhodi linij iz postaje @Model.StopName:</h2>
-</div>
-
-<div id="map"></div>
-
-<div class="text-center">
-    <div class="btn btn-default"
-         onclick="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
-        @if (Model.DirectionId == 1)
-        {
-            <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
-        }
-        else
-        {
-            <img class="directionArrowImage" src="~/images/toCity.svg" />
-        }
+<div class="stopHeaderContainer">
+    <div id="map"></div>
+    <div class="stopNameHeader">
+        <div class="stopNameTextHeader">@Model.StopName.Trim()</div>
+        <div class="btn changeDirectionButton"
+             onclick="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
+            @if (Model.DirectionId == 1)
+            {
+                <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
+            }
+            else
+            {
+                <img class="directionArrowImage" src="~/images/toCity.svg" />
+            }
+        </div>
+        <input id="timetableDate"
+               type="date"
+               name="timetableDate"
+               onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
+               value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
     </div>
 </div>
-
-<input id="timetableDate"
-       type="date"
-       name="timetableDate"
-       onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
-       value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
 
 <div>
     @foreach (var item in Model.StopTimetables)

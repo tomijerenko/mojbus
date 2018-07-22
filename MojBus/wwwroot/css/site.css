@@ -48,7 +48,7 @@
     }
 
 .lineNumberContainer {
-    width: 120px;
+    width: 50px;
     font-size: 2em;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .directionArrowImage {
-    width: 6em;
+    width: 3.5em;
 }
 
 .searchBarArrowImage {
@@ -167,8 +167,47 @@
 }
 
 #map {
-    height: 400px;
+    height: 300px;
     width: 100%;
-    margin-bottom: 15px;
-    margin-top: 15px;
+}
+
+#filterInput {
+    background: url(/images/lupa.svg) no-repeat scroll;
+    padding-left: 35px;
+    background-color: #f2f2f2;
+    border: 0px;
+}
+.stopHeaderContainer {
+    background-color: #f2f2f2;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-bottom: 1px solid #cccccc;
+}
+.stopNameHeader {
+    height: 100px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.stopNameTextHeader {
+    font-size:2.5em;
+    width:75%;
+    float:left;
+}
+
+.changeDirectionButton {
+    float:right;
+}
+
+#timetableDate {
+    width:40%;
+}
+
+.flex-container {
+    padding: 0;
+}
+
+.btn-default {
+    border-width: 0px 0px 1px 0px;
+    border-radius: 0px;
 }
