@@ -1,20 +1,22 @@
 ﻿@model StopTimetable
 @{
-    ViewData["Title"] = "Timetable";
+    ViewData["Title"] = "Vozni red linije iz postaje";
     string tempTime = "0";
 }
 
-<div class="text-center">
-    <h2>Linijski vozni red za postajo @Model.StopName.Trim():</h2>
+<div class="stopHeaderContainer">
+    <div id="map"></div>
+    <div class="stopNameHeader">
+        <div class="stopNameTextHeader">@Model.StopName.Trim()</div>
+        <div class="timetableDate">
+            <input id="timetableDate"
+                   type="date"
+                   name="timetableDate"
+                   onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
+                   value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
+        </div>
+    </div>
 </div>
-
-<div id="map"></div>
-
-<input id="timetableDate"
-       onchange="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId })')"
-       type="date"
-       name="timetableDate"
-       value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))">
 
 <div class="text-center">
     @foreach (var item in Model.StopTimetables)

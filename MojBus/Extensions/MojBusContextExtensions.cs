@@ -167,7 +167,7 @@ namespace MojBus.Extensions
             return isAdded;
         }
 
-        public static StopLocationModel GetStopLocation(this MojBusContext context, string stopName, int directionId)
+        public static StopLocationModel StopLocation(this MojBusContext context, string stopName, int directionId)
         {
             StopLocationModel model = new StopLocationModel();
             var data = context.Gtfsstops.Where(x => x.StopName == stopName && x.StopDirectionId == directionId).FirstOrDefault();
@@ -176,7 +176,7 @@ namespace MojBus.Extensions
             return model;
         }
 
-        public static List<StopLocationModel> GetAllStopsForRoute(this MojBusContext context, string routeShortName, int directionId, DateTime date)
+        public static List<StopLocationModel> LocationsForRouteStops(this MojBusContext context, string routeShortName, int directionId, DateTime date)
         {
             object[] sqlParams = {
                 new SqlParameter("@RouteShortName", routeShortName),

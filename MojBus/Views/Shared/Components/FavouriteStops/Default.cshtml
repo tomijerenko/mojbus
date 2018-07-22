@@ -6,8 +6,8 @@
 
 @if (Model.Count() != 0)
 {
-    <div class="text-center">
-        <h2>Priljubljene:</h2>
+    <div class="text-center favouritesSectionSplit">
+        Priljubljene:
     </div>
 
     <div>
@@ -15,25 +15,25 @@
         {
             @if (item != null)
             {
-                <div class="flex-container">
+                <div class="flex-container flexContainerNoMargin">
                     <a class="btn btn-default btn-block departureDataContainer"
                        href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2") })">
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                             <span class="tripShortName">@item.TripShortName</span>
                         </div>
                         <div class="pull-left text-center">
-                            <span>@item.StopName</span>
+                            <span class="favouriteStopName">@item.StopName</span>
                             @if (item.DirectionID == 1)
                             {
-                                <img class="searchBarArrowImage" src="~/images/awayFromCity.svg" />
+                                <img class="favouritesArrowImage" src="~/images/awayFromCity.svg" />
                             }
                             else
                             {
-                                <img class="searchBarArrowImage" src="~/images/toCity.svg" />
+                                <img class="favouritesArrowImage" src="~/images/toCity.svg" />
                             }
                         </div>
                         @{
-                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(10);
+                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
                             if (departureTimes.Count() == 0)
                             {
                                 <span>Od trenutne ure naprej ne vozi vec!</span>
