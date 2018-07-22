@@ -18,11 +18,13 @@
                 <img class="directionArrowImage" src="~/images/toCity.svg" />
             }
         </div>
-        <input id="timetableDate"
-               type="date"
-               name="timetableDate"
-               onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
-               value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
+        <div class="timetableDate">
+            <input id="timetableDate"
+                   type="date"
+                   name="timetableDate"
+                   onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
+                   value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
+        </div>
     </div>
 </div>
 
@@ -31,14 +33,14 @@
     {
         @if (item != null)
         {
-            <div class="flex-container">
+            <div class="flex-container flexContainerNoMargin">
                 <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID })')">
                     <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                         <span class="tripShortName">@item.TripShortName</span>
                     </div>
 
                     @{
-                        IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(10);
+                        IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (time.Hour <= Convert.ToInt32(x.Substring(0, 2)) && time.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (time.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
                         if (departureTimes.Count() == 0)
                         {
                             <span>Od trenutne ure naprej ne vozi vec!</span>
