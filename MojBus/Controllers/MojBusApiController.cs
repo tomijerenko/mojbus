@@ -115,5 +115,11 @@ namespace MojBus.Controllers
         {
             return Json(_context.LocationsForRouteStops(routeShortName, directionId, date));
         }
+
+        [HttpGet]
+        public IActionResult DepartureTimetableBetweenTwoStops(string stopNameFrom, string stopNameTo, int directionId, DateTime date)
+        {
+            return Json(_context.DepartureTimetableBetweenTwoStops(stopNameFrom, stopNameTo, directionId, date));
+        }
     }
 }
