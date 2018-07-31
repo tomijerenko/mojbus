@@ -7,7 +7,12 @@
 <div class="stopHeaderContainer">
     <div id="map"></div>
     <div class="stopNameHeader">
-        <div class="stopNameTextHeader">@Model.StopName.Trim()</div>
+        <div class="stopNameTextHeader">
+            <div class="lineNumberContainer timetableLineNumberContainer pull-left text-center" style="background-color: @Model.HTMLColor;">
+                <span class="tripShortName">@Model.RouteShortName</span>
+            </div>
+            @Model.StopName.Trim()
+        </div>
         <div class="timetableDate">
             <input id="timetableDate"
                    type="date"

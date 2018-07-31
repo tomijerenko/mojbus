@@ -54,9 +54,17 @@ footer {
     }
 
 .lineNumberContainer {
-    width: 50px;
+    width: auto;
+    min-width: 45px;
     font-size: 2em;
     margin-right: 5px;
+}
+
+.timetableLineNumberContainer {
+    min-width: 100px;
+    min-height: 100px;
+    font-size: 2.5em;
+    margin: -5px 10px 0px -15px;
 }
 
 .tripShortName {

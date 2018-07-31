@@ -31,6 +31,7 @@ namespace MojBus.Extensions
                         TripHeadsign = item.TripHeadsign,
                         DirectionID = item.DirectionID,
                         RouteId = item.RouteId,
+                        RouteShortName = item.RouteShortName,
                         DepartureTimes = new List<string>() { item.DepartureTime.Trim() }
                     };
                 }
@@ -49,6 +50,7 @@ namespace MojBus.Extensions
                         TripHeadsign = item.TripHeadsign,
                         DirectionID = item.DirectionID,
                         RouteId = item.RouteId,
+                        RouteShortName = item.RouteShortName,
                         DepartureTimes = new List<string>() { item.DepartureTime.Trim() }
                     };
                 }

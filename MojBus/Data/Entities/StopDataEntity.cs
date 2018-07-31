@@ -13,5 +13,6 @@ namespace MojBus.Data.Entities
         public string DepartureTime { get; set; }
         public double StopLon { get; set; }
         public double StopLat { get; set; }
+        public string RouteShortName { get; set; }
     }
 }

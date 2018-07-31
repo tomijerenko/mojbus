@@ -6,6 +6,7 @@ using MojBus.Extensions;
 using MojBus.Models;
 using MojBus.Models.FavouriteStops;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MojBus.Controllers
@@ -46,11 +47,14 @@ namespace MojBus.Controllers
 
         public IActionResult Timetable(string stopName, string routeShortName, int directionId, DateTime date)
         {
+            var gtfsline = _context.Gtfslines.FirstOrDefault(x => x.TripShortName == routeShortName);
             StopTimetable timetable = new StopTimetable()
             {
                 StopName = stopName,
                 DirectionId = directionId,
-                RouteShortName = routeShortName,
+                TripShortName = routeShortName,
+                RouteShortName = gtfsline.Code,
+                HTMLColor = gtfsline.Htmlcolor,
                 RouteStopLocations = _context.LocationsForRouteStops(routeShortName, directionId, date),
                 StopLocation = _context.StopLocation(stopName, directionId),
                 RequestedDate = date == DateTime.MinValue ? DateTime.Now : date,

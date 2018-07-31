@@ -36,7 +36,7 @@
             <div class="flex-container flexContainerNoMargin">
                 <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID })')">
                     <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
-                        <span class="tripShortName">@item.TripShortName</span>
+                        <span class="tripShortName">@item.RouteShortName</span>
                     </div>
 
                     @{

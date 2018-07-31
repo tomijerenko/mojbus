@@ -19,7 +19,7 @@
                     <a class="btn btn-default btn-block departureDataContainer"
                        href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2") })">
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
-                            <span class="tripShortName">@item.TripShortName</span>
+                            <span class="tripShortName">@item.RouteShortName</span>
                         </div>
                         <div class="pull-left text-center">
                             <span class="favouriteStopName">@item.StopName</span>

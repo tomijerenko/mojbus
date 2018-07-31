@@ -7,7 +7,9 @@ namespace MojBus.Models
     {
         public int DirectionId { get; set; }
         public string StopName { get; set; }
+        public string TripShortName { get; set; }
         public string RouteShortName { get; set; }
+        public string HTMLColor { get; set; }
         public DateTime RequestedDate { get; set; }
         public List<StopLocationModel> RouteStopLocations { get; set; }
         public StopLocationModel StopLocation { get; set; }
@@ -28,6 +30,7 @@ namespace MojBus.Models
         public double StopLat { get; set; }
         public string TripShortName { get; set; }
         public string TripHeadsign { get; set; }
+        public string RouteShortName { get; set; }
         public int DirectionID { get; set; }
         public int RouteId { get; set; }
         public bool isFavourite { get; set; }
