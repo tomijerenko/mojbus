@@ -117,9 +117,9 @@ namespace MojBus.Controllers
         }
 
         [HttpGet]
-        public IActionResult DepartureTimetableBetweenTwoStops(string stopNameFrom, string stopNameTo, int directionId, DateTime date)
+        public IActionResult DepartureTimetableBetweenTwoStops(string stopNameFrom, string stopNameTo, DateTime date)
         {
-            return Json(_context.DepartureTimetableBetweenTwoStops(stopNameFrom, stopNameTo, directionId, date));
+            return Json(_context.DepartureTimetableBetweenTwoStops(stopNameFrom, stopNameTo, date));
         }
     }
 }
