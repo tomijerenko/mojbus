@@ -216,7 +216,7 @@ namespace MojBus.Extensions
                 StopId = temp.StartStopId,
                 StopLat = temp.StartStopLat,
                 StopLon = temp.StartStopLon,
-                StopName = temp.StartStopName
+                StopName = temp.StartStopName.Trim()
             };
             TripPlannerData.EndStop = new StopModel()
             {
@@ -224,7 +224,7 @@ namespace MojBus.Extensions
                 StopId = temp.EndStopId,
                 StopLat = temp.EndStopLat,
                 StopLon = temp.EndStopLon,
-                StopName = temp.EndStopName
+                StopName = temp.EndStopName.Trim()
             };
 
             List<Line> lines = new List<Line>();
