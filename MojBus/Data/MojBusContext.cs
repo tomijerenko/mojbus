@@ -18,6 +18,7 @@ namespace MojBus.Data
         public virtual DbSet<RouteStopsEntity> RouteData { get; set; }
         public virtual DbSet<FavouriteStopRoutes> FavouriteStopRoutes { get; set; }
         public virtual DbSet<Gtfslines> Gtfslines { get; set; }
+        public virtual DbSet<TripPlannerEntity> TripPlanner { get; set; }
 
         public MojBusContext(DbContextOptions<MojBusContext> options)
             : base(options)

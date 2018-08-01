@@ -193,7 +193,7 @@ namespace MojBus.Extensions
                 .ConvertToRouteStopsDistinctedByStops();
         }
 
-        public static List<StopDataModel> DepartureTimetableBetweenTwoStops(this MojBusContext context, string stopNameFrom, string stopNameTo, DateTime date)
+        public static TripPlannerModel DepartureTimetableBetweenTwoStops(this MojBusContext context, string stopNameFrom, string stopNameTo, DateTime date)
         {
             object[] sqlParams = {
                 new SqlParameter("@StopNameFrom", stopNameFrom),
@@ -201,13 +201,14 @@ namespace MojBus.Extensions
                 new SqlParameter("@Date", date)
             };
 
-            List<StopDataEntity> data = context
-                .Set<StopDataEntity>()
+            List<TripPlannerEntity> data = context
+                .Set<TripPlannerEntity>()
                 .FromSql("exec dbo.DepartureTimetableBetweenTwoStations @StopNameFrom, @StopNameTo, @Date;", sqlParams)
                 .AsNoTracking()
                 .ToList();
 
-            return data.StopDataEntityToModel(stopNameFrom);
+            return data
+                .ConvertToTripPlannerModel();
         }
 
         //old api methods

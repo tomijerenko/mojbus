@@ -201,5 +201,69 @@ namespace MojBus.Extensions
             
             return StopLocationsForRoute;
         }
+        
+        public static TripPlannerModel ConvertToTripPlannerModel(this List<TripPlannerEntity> data)
+        {
+            TripPlannerModel TripPlannerData = new TripPlannerModel();
+
+            if (data.First() == null)
+                return TripPlannerData;
+
+            TripPlannerEntity temp = data.First();
+            TripPlannerData.StartStop = new StopModel()
+            {
+                StopDirection = temp.StartStopDirection,
+                StopId = temp.StartStopId,
+                StopLat = temp.StartStopLat,
+                StopLon = temp.StartStopLon,
+                StopName = temp.StartStopName
+            };
+            TripPlannerData.EndStop = new StopModel()
+            {
+                StopDirection = temp.EndStopDirection,
+                StopId = temp.EndStopId,
+                StopLat = temp.EndStopLat,
+                StopLon = temp.EndStopLon,
+                StopName = temp.EndStopName
+            };
+
+            List<Line> lines = new List<Line>();
+            List<Trip> trips;
+            List<TransitTime> transitTimes;
+
+            foreach (var groupedByTripShortName in data.GroupBy(x=>x.TripShortName))
+            {
+                trips = new List<Trip>();
+                foreach (var groupedByTripHeadsign in groupedByTripShortName.GroupBy(x=>x.TripHeadsign))
+                {
+                    transitTimes = new List<TransitTime>();
+                    foreach (var item in groupedByTripHeadsign.ToList())
+                    {
+                        transitTimes.Add(new TransitTime()
+                        {
+                            ArrivalTime = item.EndStopArrivalTime.Trim(),
+                            DepartureTime = item.StartStopDepartureTime.Trim(),
+                            TravelTimeMinutes = item.TravelTimeMinutes
+                        });
+                    }
+                    trips.Add(new Trip()
+                    {
+                        TripDirectionID = groupedByTripHeadsign.First().TripDirectionID,
+                        TripHeadsign = groupedByTripHeadsign.First().TripHeadsign,
+                        Times = transitTimes
+                    });
+                }
+                lines.Add(new Line()
+                {
+                    HTMLColor = groupedByTripShortName.First().HTMLColor,
+                    RouteShortName = groupedByTripShortName.First().RouteShortName,
+                    TripShortName = groupedByTripShortName.First().TripShortName,
+                    Trips = trips
+                });
+            }
+            TripPlannerData.Lines = lines;
+
+            return TripPlannerData;
+        }
     }
 }
