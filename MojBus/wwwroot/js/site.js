@@ -1,4 +1,17 @@
-﻿function filterMenu() {
+﻿$(document).ready(function () {
+    $(function () {
+        $("#accordion").accordion({
+            collapsible: true,
+            active: true,
+            heightStyle: "content",
+            autoHeight: false,
+            clearStyle: true, 
+        });
+        $("#datepicker").datepicker();
+    });
+});
+
+function filterMenu() {
     var input, filter, ul, li, a, i;
     input = document.getElementById("filterInput");
     filter = input.value.toUpperCase();
