@@ -310,6 +310,6 @@ footer {
     display:inline-block;
 }
 
-#accordion .ui-icon {
+.tripPlannerAccordionHeader .ui-icon {
     display: none;
 }
