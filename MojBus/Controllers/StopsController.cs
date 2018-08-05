@@ -64,6 +64,11 @@ namespace MojBus.Controllers
             return View(timetable);
         }
 
+        public IActionResult TripPlanner(string stopFrom, string stopTo, DateTime date)
+        {
+            return View();
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddToFavourite(FavouriteStopRouteModel favouriteStop)

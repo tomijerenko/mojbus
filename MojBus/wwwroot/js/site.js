@@ -88,3 +88,7 @@ function initMap() {
         });
     });
 }
+
+function tripPlannerSearchParams(clickedItem) {
+    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}&date=${$("#datepicker").val()}`);
+}

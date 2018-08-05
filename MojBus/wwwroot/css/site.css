@@ -243,9 +243,9 @@ footer {
     width: 2.5em;
 }
 
-.redButton, .redButton:hover {
+.redButton {
     background: #B8353D;
-    color: white;
+    color: white !important;
 }
 
 .tripPlannerImage {

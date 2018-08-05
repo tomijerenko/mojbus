@@ -5,7 +5,7 @@
 }
 <div class="searchContainer">
     <div class="btn-group searchBar center-block">
-        <input id="filterInput" class="form-control dropdown-toggle" onkeyup="filterMenu()" data-toggle="dropdown" placeholder="Išči" aria-describedby="tripPlanner" />
+        <input id="filterInput" class="form-control dropdown-toggle" onkeyup="filterMenu()" data-toggle="dropdown" placeholder="Išči po postajah" aria-describedby="tripPlanner" />
         <ul id="filterList" class="dropdown-menu pre-scrollable btn-block">
             @foreach (var item in Model)
             {
@@ -36,10 +36,10 @@
             <img class="tripPlannerImage" src="~/images/tripPlanner.svg" alt="TripPlanner" />
         </div>
         <div class="tripPlannerAccordionMenu">
-            <input class="form-control plannerInput" placeholder="Izberi začetno postajo" aria-describedby="tripPlanner" />
-            <input class="form-control plannerInput" placeholder="Izberi končno postajo" aria-describedby="tripPlanner" />
-            <div id="datepicker" class="datePickerContainer"></div>
-            <button class="btn redButton btn-block">IŠČI</button>
+                <input id="stopFrom" class="form-control plannerInput" placeholder="Izberite začetno postajo..."/>
+                <input id="stopTo" class="form-control plannerInput" placeholder="Izberite končno postajo..."/>
+                <div id="datepicker" class="datePickerContainer"></div>
+                <a class="btn redButton btn-block" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
         </div>
     </div>
 
