@@ -1,6 +1,6 @@
 ﻿@model TripPlannerModel
 @{
-    ViewData["Title"] = "TripPlanner";
+    ViewData["Title"] = "Načrtovalec";
 }
 
 @if (Model.StartStop == null || Model.EndStop == null)
@@ -12,8 +12,15 @@ else
     <div class="stopHeaderContainer">
         <div id="map"></div>
         <div class="stopNameHeader">
-            <div class="stopNameTextHeader">@Model.StartStop.StopName.Trim()</div>
-            <div class="stopNameTextHeader">@Model.EndStop.StopName.Trim()</div>
+            <div class="tripPlannerStopName">@Model.StartStop.StopName.Trim()</div>
+            <div class="tripPlannerStopName">-</div>
+            <div class="tripPlannerStopName">@Model.EndStop.StopName.Trim()</div>
+            <div class="tripPlannerDate">
+                <input type="text" 
+                       id="datepicker" 
+                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')" 
+                       data-date="@Model.RequestedDate.Date">
+            </div>            
         </div>
     </div>
 
@@ -23,31 +30,22 @@ else
             @if (item != null)
             {
                 <div class="flex-container flexContainerNoMargin">
-                    <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StartStop.StopName, routeShortName = item.TripShortName, directionId = 0 })')">
+                    <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StartStop.StopName, routeShortName = item.TripShortName, directionId = item.Trips.First().TripDirectionID, date = Model.RequestedDate })')">
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                             <span class="tripShortName">@item.RouteShortName</span>
                         </div>
-                        <div class="departureTime">
+                        <div class="departureTimeTripPlanner">
                             @foreach (var trip in item.Trips.SelectMany(x => x.Times).Take(5))
                             {
-                                <span>@trip.DepartureTime</span>
-                                <span>@trip.TravelTimeMinutes min</span>
+                                <div class="departureTimeData">
+                                    <span>@trip.DepartureTime</span>
+                                    <br />
+                                    <span>@trip.TravelTimeMinutes min</span>
+                                </div>
+
                             }
                         </div>
                     </div>
-                    @*@if (User.Identity.IsAuthenticated)
-                        {
-                            <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
-                                @if (item.isFavourite)
-                                {
-                                    <img class="favouritesStarImage" src="~/images/starRed.svg" />
-                                }
-                                else
-                                {
-                                    <img class="favouritesStarImage" src="~/images/starGray.svg" />
-                                }
-                            </div>
-                        }*@
                 </div>
             }
         }

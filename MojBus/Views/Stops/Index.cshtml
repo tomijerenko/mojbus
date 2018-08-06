@@ -19,11 +19,10 @@
             }
         </div>
         <div class="timetableDate">
-            <input id="timetableDate"
-                   type="date"
-                   name="timetableDate"
+            <input type="text"
+                   id="datepicker"
                    onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
-                   value="@(Model.RequestedDate.Year+"-"+Model.RequestedDate.Month.ToString("d2")+"-"+Model.RequestedDate.Day.ToString("d2"))" />
+                   data-date="@Model.RequestedDate">
         </div>
     </div>
 </div>

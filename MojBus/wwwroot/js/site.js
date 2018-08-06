@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$().ready(function () {
     $(function () {
         $("#accordion").accordion({
             collapsible: true,
@@ -7,7 +7,13 @@
             autoHeight: false,
             clearStyle: true, 
         });
-        $("#datepicker").datepicker();
+        $("#datepicker").datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: 0
+        });
+        if ($("#datepicker").data("date") !== undefined) {
+            $('#datepicker').datepicker("setDate", new Date($("#datepicker").data("date")));
+        }
     });
 });
 
@@ -60,7 +66,7 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 }
 
 function navigateWithDate(requestedUri) {
-    window.location.href = requestedUri + '&date=' + $('#timetableDate').val(); 
+    window.location.href = requestedUri + '&date=' + $('#datepicker').val(); 
 }
 
 var map;
@@ -69,7 +75,6 @@ var lng;
 var stopsArray;
 
 function initMap() {
-    console.log(stopsArray);
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: lat, lng: lng },
         zoom: 17
