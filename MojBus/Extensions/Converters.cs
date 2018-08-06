@@ -206,7 +206,7 @@ namespace MojBus.Extensions
         {
             TripPlannerModel TripPlannerData = new TripPlannerModel();
 
-            if (data.First() == null)
+            if (data.Count == 0 || data.First() == null)
                 return TripPlannerData;
 
             TripPlannerEntity temp = data.First();

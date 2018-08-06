@@ -1,7 +1,59 @@
-﻿
+﻿@model TripPlannerModel
 @{
     ViewData["Title"] = "TripPlanner";
 }
 
-<h2>TripPlanner</h2>
+@if (Model.StartStop == null || Model.EndStop == null)
+{
+    <h2>Avtobus nima direktne povezave med izbranima postajama.</h2>
+}
+else
+{
+    <div class="stopHeaderContainer">
+        <div id="map"></div>
+        <div class="stopNameHeader">
+            <div class="stopNameTextHeader">@Model.StartStop.StopName.Trim()</div>
+            <div class="stopNameTextHeader">@Model.EndStop.StopName.Trim()</div>
+        </div>
+    </div>
 
+    <div>
+        @foreach (var item in Model.Lines)
+        {
+            @if (item != null)
+            {
+                <div class="flex-container flexContainerNoMargin">
+                    <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StartStop.StopName, routeShortName = item.TripShortName, directionId = 0 })')">
+                        <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
+                            <span class="tripShortName">@item.RouteShortName</span>
+                        </div>
+                        <div class="departureTime">
+                            @foreach (var trip in item.Trips.SelectMany(x => x.Times).Take(5))
+                            {
+                                <span>@trip.DepartureTime</span>
+                                <span>@trip.TravelTimeMinutes min</span>
+                            }
+                        </div>
+                    </div>
+                    @*@if (User.Identity.IsAuthenticated)
+                        {
+                            <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
+                                @if (item.isFavourite)
+                                {
+                                    <img class="favouritesStarImage" src="~/images/starRed.svg" />
+                                }
+                                else
+                                {
+                                    <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                                }
+                            </div>
+                        }*@
+                </div>
+            }
+        }
+    </div>
+
+    @section Scripts {
+        @await Html.PartialAsync("_GoogleMapsScripts", new StopLocationModel() { StopLat = Model.StartStop.StopLat, StopLon = Model.StartStop.StopLon })
+    }
+}

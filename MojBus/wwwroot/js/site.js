@@ -11,15 +11,14 @@
     });
 });
 
-function filterMenu() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("filterInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("filterList");
+function filterMenu(inputElement, filterListId) {
+    var filter, ul, li;
+    filter = inputElement.value.toUpperCase();
+    ul = document.getElementById(filterListId);
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        stopName = li[i].getAttribute("name");
+        if (stopName.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
@@ -91,4 +90,8 @@ function initMap() {
 
 function tripPlannerSearchParams(clickedItem) {
     $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}&date=${$("#datepicker").val()}`);
+}
+
+function chosenItemToInput(value, inputId) {
+    document.getElementById(inputId).value = value;
 }

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MojBus.Models
 {
     public class TripPlannerModel
     {
+        public DateTime SearchedDate { get; set; }
         public StopModel StartStop { get; set; }
         public StopModel EndStop { get; set; }
         public List<Line> Lines { get; set; }

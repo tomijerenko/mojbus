@@ -5,18 +5,19 @@
 }
 <div class="searchContainer">
     <div class="btn-group searchBar center-block">
-        <input id="filterInput" class="form-control dropdown-toggle" onkeyup="filterMenu()" data-toggle="dropdown" placeholder="Išči po postajah" aria-describedby="tripPlanner" />
-        <ul id="filterList" class="dropdown-menu pre-scrollable btn-block">
+        <input id="quickStopSelect" class="form-control dropdown-toggle searchFilterInput" onkeyup="filterMenu(this, 'quickStops')" data-toggle="dropdown" placeholder="Išči po postajah" aria-describedby="quickStops" />
+        <ul id="quickStops" class="dropdown-menu pre-scrollable btn-block" aria-labelledby="quickStops">
             @foreach (var item in Model)
             {
-                <li>
+                <li name="@item.StopName">
                     <a class="dropdown-item"
                        href="@Url.Action("Index","Stops",new
                     {
                         stopName = item.StopName,
                         directionId = item.StopDirectionId,
                         date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2")
-                    })">
+                    })"
+                       onclick="chosenItemToInput('@item.StopName', 'quickStopSelect')">
                         @if (item.StopDirectionId == 1)
                         {
                             <img class="searchBarArrowImage" src="~/images/awayFromCity.svg" />
@@ -25,7 +26,7 @@
                         {
                             <img class="searchBarArrowImage" src="~/images/toCity.svg" />
                         }
-                        @item.StopName
+                        @item.StopName.Trim()
                     </a>
                 </li>
             }
@@ -36,10 +37,30 @@
             <img class="tripPlannerImage" src="~/images/tripPlanner.svg" alt="TripPlanner" />
         </div>
         <div class="tripPlannerAccordionMenu">
-                <input id="stopFrom" class="form-control plannerInput" placeholder="Izberite začetno postajo..."/>
-                <input id="stopTo" class="form-control plannerInput" placeholder="Izberite končno postajo..."/>
-                <div id="datepicker" class="datePickerContainer"></div>
-                <a class="btn redButton btn-block" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
+            <div class="stopsDropdownContainer">
+                <input id="stopFrom" onkeyup="filterMenu(this, 'stopsFromList')" class="form-control plannerInput dropdown-toggle" data-toggle="dropdown" aria-describedby="stopsFromList" placeholder="Izberite začetno postajo..." />
+                <ul id="stopsFromList" class="dropdown-menu pre-scrollable btn-block stopsDropdownMenu" aria-labelledby="stopFrom">
+                    @foreach (var item in Model.Select(x => x.StopName.Trim()).Distinct())
+                    {
+                        <li name="@item" class="dropdown-item listItemHoverEffect">
+                            <div class="dropdownMenuDivItem" onclick="chosenItemToInput('@item', 'stopFrom')">@item</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="stopsDropdownContainer">
+                <input id="stopTo" onkeyup="filterMenu(this, 'stopsToList')" class="form-control dropdown-toggle plannerInput" data-toggle="dropdown" aria-describedby="stopsToList" placeholder="Izberite končno postajo..." />
+                <ul id="stopsToList" class="dropdown-menu pre-scrollable btn-block stopsDropdownMenu" aria-labelledby="stopTo">
+                    @foreach (var item in Model.Select(x => x.StopName.Trim()).Distinct())
+                    {
+                        <li name="@item" class="listItemHoverEffect">
+                            <div class="dropdownMenuDivItem" onclick="chosenItemToInput('@item', 'stopTo')">@item</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="datepicker" class="datePickerContainer"></div>
+            <a class="btn redButton btn-block" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
         </div>
     </div>
 

@@ -182,7 +182,7 @@ footer {
     width: 100%;
 }
 
-#filterInput {
+.searchFilterInput {
     background: url(/images/lupa.svg) no-repeat scroll;
     padding-left: 35px;
     background-color: #f2f2f2;
@@ -263,7 +263,8 @@ footer {
     padding: 0 !important;
     border-color: #ccc;
     float: right;
-    z-index:10;
+    z-index: 10;
+    border-radius: 4px;
 }
 
 .input-group-addon {
@@ -281,8 +282,7 @@ footer {
 
     .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
         background: #B8353D;
-        border-color: #B8353D;
-        border-radius: 2px;
+        border-color: #B8353D;        
     }
 
 .ui-accordion .ui-accordion-content {
@@ -308,8 +308,27 @@ footer {
 .datePickerContainer {
     padding-bottom: 10px;
     display:inline-block;
+    position:relative;
 }
 
 .tripPlannerAccordionHeader .ui-icon {
     display: none;
+}
+
+.stopsDropdownContainer {
+    position:relative;
+}
+
+.stopsDropdownMenu {
+    max-height:200px;
+}
+
+.dropdownMenuDivItem {
+    padding: 3px 20px;
+    cursor: pointer;
+    height: 26px;    
+}
+
+.listItemHoverEffect :hover {
+    background-color: #f2f2f2;
 }
