@@ -33,7 +33,7 @@
         @if (item != null)
         {
             <div class="flex-container flexContainerNoMargin">
-                <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID })')">
+                <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = Model.RequestedDate })">
                     <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                         <span class="tripShortName">@item.RouteShortName</span>
                     </div>
@@ -55,7 +55,7 @@
 
                         }
                     }
-                </div>
+                </a>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">

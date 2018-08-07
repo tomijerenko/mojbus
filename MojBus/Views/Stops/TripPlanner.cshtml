@@ -16,11 +16,11 @@ else
             <div class="tripPlannerStopName">-</div>
             <div class="tripPlannerStopName">@Model.EndStop.StopName.Trim()</div>
             <div class="tripPlannerDate">
-                <input type="text" 
-                       id="datepicker" 
-                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')" 
+                <input type="text"
+                       id="datepicker"
+                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"
                        data-date="@Model.RequestedDate.Date">
-            </div>            
+            </div>
         </div>
     </div>
 
@@ -30,7 +30,7 @@ else
             @if (item != null)
             {
                 <div class="flex-container flexContainerNoMargin">
-                    <div class="btn btn-default btn-block departureDataContainer" onclick="navigateWithDate('@Url.Action("Timetable", "Stops", new { stopName = Model.StartStop.StopName, routeShortName = item.TripShortName, directionId = item.Trips.First().TripDirectionID, date = Model.RequestedDate })')">
+                    <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = Model.StartStop.StopName, routeShortName = item.TripShortName, directionId = item.Trips.First().TripDirectionID, date = Model.RequestedDate.Date })">
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                             <span class="tripShortName">@item.RouteShortName</span>
                         </div>
@@ -45,11 +45,17 @@ else
 
                             }
                         </div>
-                    </div>
+                    </a>
                 </div>
             }
         }
     </div>
+
+
+    <script>
+        stopsArray = @Html.Raw(Json.Serialize(new List<StopLocationModel>() { new StopLocationModel() { StopLat = Model.EndStop.StopLat, StopLon = Model.EndStop.StopLon } }));
+    </script>
+
 
     @section Scripts {
         @await Html.PartialAsync("_GoogleMapsScripts", new StopLocationModel() { StopLat = Model.StartStop.StopLat, StopLon = Model.StartStop.StopLon })

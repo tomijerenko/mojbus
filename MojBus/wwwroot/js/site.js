@@ -5,7 +5,7 @@
             active: true,
             heightStyle: "content",
             autoHeight: false,
-            clearStyle: true, 
+            clearStyle: true,
         });
         $("#datepicker").datepicker({
             dateFormat: 'yy-mm-dd',
@@ -66,7 +66,7 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 }
 
 function navigateWithDate(requestedUri) {
-    window.location.href = requestedUri + '&date=' + $('#datepicker').val(); 
+    window.location.href = requestedUri + '&date=' + $('#datepicker').val();
 }
 
 var map;
@@ -80,17 +80,27 @@ function initMap() {
         zoom: 17
     });
 
-    var marker = new google.maps.Marker({
+    var startMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
-        map: map
+        map: map,
+
     });
 
-    stopsArray.forEach(function (item) {
-        new google.maps.Marker({
-            position: { lat: item.stopLat, lng: item.stopLon },
-            map: map
+    if (stopsArray !== undefined) {
+        var bounds = new google.maps.LatLngBounds();
+        bounds.extend(startMarker.getPosition());
+        stopsArray.forEach(function (item) {
+            if (lat !== item.stopLat && lng !== item.stopLon) {
+                var marker = new google.maps.Marker({
+                    position: { lat: item.stopLat, lng: item.stopLon },
+                    map: map,
+                    icon: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0000ff"
+                });
+                bounds.extend(marker.getPosition());
+            }
         });
-    });
+        map.fitBounds(bounds)
+    }
 }
 
 function tripPlannerSearchParams(clickedItem) {
