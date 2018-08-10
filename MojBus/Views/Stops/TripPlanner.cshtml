@@ -21,8 +21,7 @@ else
                        onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"
                        data-date="@Model.RequestedDate.Date">
                 <input id="timepicker"
-                       data-date="@Model.RequestedDate"
-                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"/>
+                       data-date="@Model.RequestedDate"/>
             </div>
         </div>
     </div>

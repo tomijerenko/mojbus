@@ -13,12 +13,8 @@
     });
 
     $('#timepicker').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 15,
-        defaultTime: 'now',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
+        timeFormat: "H:i",
+        step: 15,
     });
 
     if ($("#datepicker").data("date") !== undefined) {
@@ -122,8 +118,4 @@ function tripPlannerSearchParams(clickedItem) {
 
 function chosenItemToInput(value, inputId) {
     document.getElementById(inputId).value = value;
-}
-
-function test() {
-    console.log('trol');
 }
