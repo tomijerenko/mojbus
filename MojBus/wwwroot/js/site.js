@@ -1,20 +1,33 @@
 ﻿$().ready(function () {
-    $(function () {
-        $("#accordion").accordion({
-            collapsible: true,
-            active: true,
-            heightStyle: "content",
-            autoHeight: false,
-            clearStyle: true,
-        });
-        $("#datepicker").datepicker({
-            dateFormat: 'yy-mm-dd',
-            minDate: 0
-        });
-        if ($("#datepicker").data("date") !== undefined) {
-            $('#datepicker').datepicker("setDate", new Date($("#datepicker").data("date")));
-        }
+    $("#accordion").accordion({
+        collapsible: true,
+        active: true,
+        heightStyle: "content",
+        autoHeight: false,
+        clearStyle: true,
     });
+
+    $("#datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        minDate: 0
+    });
+
+    $('#timepicker').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 15,
+        defaultTime: 'now',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+
+    if ($("#datepicker").data("date") !== undefined) {
+        $('#datepicker').datepicker("setDate", new Date($("#datepicker").data("date")));
+    }
+
+    if ($("#timepicker").data("date") !== undefined) {
+        $('#timepicker').timepicker("setTime", new Date($("#timepicker").data("date")));
+    }    
 });
 
 function filterMenu(inputElement, filterListId) {
@@ -66,7 +79,7 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 }
 
 function navigateWithDate(requestedUri) {
-    window.location.href = requestedUri + '&date=' + $('#datepicker').val();
+    window.location.href = `${requestedUri}&date=${$('#datepicker').val()}T${$("#timepicker").val()}`;
 }
 
 var map;
@@ -104,9 +117,13 @@ function initMap() {
 }
 
 function tripPlannerSearchParams(clickedItem) {
-    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}&date=${$("#datepicker").val()}`);
+    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}&date=${$("#datepicker").val()}T${$("#timepicker").val()}`);
 }
 
 function chosenItemToInput(value, inputId) {
     document.getElementById(inputId).value = value;
+}
+
+function test() {
+    console.log('trol');
 }

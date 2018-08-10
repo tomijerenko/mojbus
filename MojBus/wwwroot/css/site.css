@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    overflow:hidden;
 }
 
 footer {
@@ -82,10 +83,6 @@ footer {
     width: 100%;
     margin: 0 auto;
     padding: 5px 0px 5px 0px;
-}
-
-.departureDataContainer {
-    z-index: 1;
 }
 
 .addToFavouritesButton {
@@ -204,6 +201,7 @@ footer {
     height: 100px;
     margin-left: 15px;
     margin-right: 15px;
+    position:relative;
 }
 
 .stopNameTextHeader {
@@ -223,8 +221,9 @@ footer {
 }
 
 .timetableDate {
-    float: left;
-    position:relative;
+    position:absolute;
+    bottom:10px;
+    left:95px;
 }
 
 .flexContainerNoMargin {

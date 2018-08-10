@@ -15,7 +15,7 @@
                     {
                         stopName = item.StopName,
                         directionId = item.StopDirectionId,
-                        date = currentDate.Year+"-"+currentDate.Month.ToString("d2")+"-"+currentDate.Day.ToString("d2")
+                        date = currentDate
                     })"
                        onclick="chosenItemToInput('@item.StopName', 'quickStopSelect')">
                         @if (item.StopDirectionId == 1)
@@ -60,6 +60,7 @@
                 </ul>
             </div>
             <div id="datepicker" class="datePickerContainer"></div>
+            <input id="timepicker"/>
             <a class="btn redButton btn-block" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
         </div>
     </div>

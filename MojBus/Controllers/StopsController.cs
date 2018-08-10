@@ -66,6 +66,10 @@ namespace MojBus.Controllers
 
         public IActionResult TripPlanner(string stopFrom, string stopTo, DateTime date)
         {
+            if (stopFrom == null)
+                stopFrom = "";
+            if (stopTo == null)
+                stopTo = "";
             TripPlannerModel model = _context.DepartureTimetableBetweenTwoStops(stopFrom, stopTo, date);
             model.RequestedDate = date;
             return View(model);

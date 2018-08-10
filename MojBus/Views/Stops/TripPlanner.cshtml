@@ -20,6 +20,9 @@ else
                        id="datepicker"
                        onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"
                        data-date="@Model.RequestedDate.Date">
+                <input id="timepicker"
+                       data-date="@Model.RequestedDate"
+                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"/>
             </div>
         </div>
     </div>
@@ -35,14 +38,24 @@ else
                             <span class="tripShortName">@item.RouteShortName</span>
                         </div>
                         <div class="departureTimeTripPlanner">
-                            @foreach (var trip in item.Trips.SelectMany(x => x.Times).Take(5))
-                            {
-                                <div class="departureTimeData">
-                                    <span>@trip.DepartureTime</span>
-                                    <br />
-                                    <span>@trip.TravelTimeMinutes min</span>
-                                </div>
+                            @{
+                                IEnumerable<TransitTime> departureTimes = item.Trips.SelectMany(x => x.Times).OrderBy(x=>x.DepartureTime).Where(x => (Model.RequestedDate.Hour <= Convert.ToInt32(x.DepartureTime.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.DepartureTime.Substring(3, 2))) || (Model.RequestedDate.Hour < Convert.ToInt32(x.DepartureTime.Substring(0, 2)))).Take(5);
 
+                                if (departureTimes.Count() == 0)
+                                {
+                                    <span>Od trenutne ure naprej ne vozi več!</span>
+                                }
+                                else
+                                {
+                                    @foreach (var trip in departureTimes)
+                                    {
+                                        <div class="departureTimeData">
+                                            <span>@trip.DepartureTime</span>
+                                            <br />
+                                            <span>@trip.TravelTimeMinutes min</span>
+                                        </div>
+                                    }
+                                }
                             }
                         </div>
                     </a>
@@ -50,7 +63,6 @@ else
             }
         }
     </div>
-
 
     <script>
         stopsArray = @Html.Raw(Json.Serialize(new List<StopLocationModel>() { new StopLocationModel() { StopLat = Model.EndStop.StopLat, StopLon = Model.EndStop.StopLon } }));
