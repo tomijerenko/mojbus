@@ -3,6 +3,10 @@
     padding-bottom: 20px;
 }
 
+button {
+    outline:none !important;
+}
+
 footer {
     padding-top: 10px;
 }
@@ -270,6 +274,7 @@ footer {
     z-index: 10;
     border-radius: 4px;
     border-radius: 0px 10px 10px 0px;
+    outline:none;
 }
 
 .input-group-addon {

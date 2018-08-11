@@ -154,6 +154,10 @@ function tripPlannerSearchParams(clickedItem) {
     $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}${getDateTimeString()}`);
 }
 
+function uriWithDateTimeToHref(clickedItem, uri) {
+    $(clickedItem).attr('href', `${uri}${getDateTimeString()}`);
+}
+
 function chosenItemToInput(value, inputId) {
     document.getElementById(inputId).value = value;
 }

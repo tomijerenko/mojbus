@@ -25,7 +25,7 @@ else
                        class="form-control"
                        data-date="@Model.RequestedDate"
                        onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')">
-                <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')">RESET</a>
+                <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')">PONASTAVI</a>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@ else
 
                                 if (departureTimes.Count() == 0)
                                 {
-                                    <span>Od trenutne ure naprej ne vozi več!</span>
+                                    <span>Avtobus od izbrane ure naprej ne vozi več!</span>
                                 }
                                 else
                                 {

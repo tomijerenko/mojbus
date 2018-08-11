@@ -6,8 +6,9 @@
     <div id="map"></div>
     <div class="stopNameHeader">
         <div class="stopNameTextHeader">@Model.StopName.Trim()</div>
-        <div class="btn changeDirectionButton"
-             onclick="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
+        <a class="btn changeDirectionButton"
+           href="#"
+           onclick="uriWithDateTimeToHref(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
             @if (Model.DirectionId == 1)
             {
                 <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
@@ -16,7 +17,7 @@
             {
                 <img class="directionArrowImage" src="~/images/toCity.svg" />
             }
-        </div>
+        </a>
         <div class="tripPlannerDate">
             <input type="text"
                    class="form-control"
@@ -27,56 +28,63 @@
                    class="form-control"
                    data-date="@Model.RequestedDate"
                    onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">
-            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">RESET</a>
+            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">PONASTAVI</a>
         </div>
     </div>
 </div>
 
 <div>
-    @foreach (var item in Model.StopTimetables)
+    @if (Model.StopTimetables.Count != 0)
     {
-        @if (item != null)
+        @foreach (var item in Model.StopTimetables)
         {
-            <div class="flex-container flexContainerNoMargin">
-                <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = Model.RequestedDate })">
-                    <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
-                        <span class="tripShortName">@item.RouteShortName</span>
-                    </div>
+            @if (item != null)
+            {
+                <div class="flex-container flexContainerNoMargin">
+                    <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = Model.RequestedDate })">
+                        <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
+                            <span class="tripShortName">@item.RouteShortName</span>
+                        </div>
 
-                    @{
-                        IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (Model.RequestedDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
+                        @{
+                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (Model.RequestedDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
 
-                        if (departureTimes.Count() == 0)
-                        {
-                            <span>Od trenutne ure naprej ne vozi vec!</span>
+                            if (departureTimes.Count() == 0)
+                            {
+                                <span>Avtobus od izbrane ure naprej ne vozi več!</span>
+                            }
+                            else
+                            {
+                                <div class="departureTime">
+                                    @foreach (string departureTime in departureTimes)
+                                    {
+                                        <span>@departureTime</span>
+                                    }
+                                </div>
+
+                            }
                         }
-                        else
-                        {
-                            <div class="departureTime">
-                                @foreach (string departureTime in departureTimes)
-                                {
-                                    <span>@departureTime</span>
-                                }
-                            </div>
-
-                        }
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
+                            @if (item.isFavourite)
+                            {
+                                <img class="favouritesStarImage" src="~/images/starRed.svg" />
+                            }
+                            else
+                            {
+                                <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                            }
+                        </div>
                     }
-                </a>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
-                        @if (item.isFavourite)
-                        {
-                            <img class="favouritesStarImage" src="~/images/starRed.svg" />
-                        }
-                        else
-                        {
-                            <img class="favouritesStarImage" src="~/images/starGray.svg" />
-                        }
-                    </div>
-                }
-            </div>
+                </div>
+            }
         }
+    }
+    else
+    {
+        <h2>Avtobus na izbran datum ne vozi.</h2>
     }
 </div>
 

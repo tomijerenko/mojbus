@@ -19,7 +19,7 @@
                    class="form-control"
                    onchange="navigateWithDate('@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')"
                    data-date="@Model.RequestedDate">
-            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this, '@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')">RESET</a>
+            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this, '@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')">PONASTAVI</a>
         </div>
     </div>
 </div>
