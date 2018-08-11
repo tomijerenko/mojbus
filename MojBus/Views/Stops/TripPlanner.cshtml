@@ -68,7 +68,8 @@ else
     </div>
 
     <script>
-        stopsArray = @Html.Raw(Json.Serialize(new List<StopLocationModel>() { new StopLocationModel() { StopLat = Model.EndStop.StopLat, StopLon = Model.EndStop.StopLon } }));
+        endLat = @Model.EndStop.StopLat;
+        endLng = @Model.EndStop.StopLon;        
     </script>
 
 

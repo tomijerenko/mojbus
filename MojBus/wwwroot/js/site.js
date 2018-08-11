@@ -30,6 +30,8 @@
     } else {
         $('#timepicker').timepicker('setTime', new Date());
     }
+
+    $('#accordion').removeClass('hidden');
 });
 
 function filterMenu(inputElement, filterListId) {
@@ -97,38 +99,55 @@ function getDateTimeString() {
     return `&date=${date}${time}`;
 }
 
-var map;
 var lat;
 var lng;
+var endLat;
+var endLng;
 var stopsArray;
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: lat, lng: lng },
-        zoom: 17
-    });
+    var map = new google.maps.Map(document.getElementById('map'));
+    var markerSize = new google.maps.Size(100, 100);
+    var bounds = new google.maps.LatLngBounds();
 
     var startMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
         map: map,
-
+        icon: {
+            url: "/images/startStop.svg",
+            scaledSize: markerSize
+        }
     });
+    bounds.extend(startMarker.getPosition());
 
-    if (stopsArray !== undefined) {
-        var bounds = new google.maps.LatLngBounds();
-        bounds.extend(startMarker.getPosition());
+    if (endLat !== undefined && endLng !== undefined) {
+        var endMarker = new google.maps.Marker({
+            position: { lat: endLat, lng: endLng },
+            map: map,
+            icon: {
+                url: "/images/endStop.svg",
+                scaledSize: markerSize
+            }
+        });
+        bounds.extend(endMarker.getPosition());
+    }    
+
+    if (stopsArray !== undefined) {        
         stopsArray.forEach(function (item) {
             if (lat !== item.stopLat && lng !== item.stopLon) {
                 var marker = new google.maps.Marker({
                     position: { lat: item.stopLat, lng: item.stopLon },
                     map: map,
-                    icon: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0000ff"
+                    icon: {
+                        url: "/images/intermediateStop.svg",
+                        scaledSize: new google.maps.Size(50, 50)
+                    }
                 });
                 bounds.extend(marker.getPosition());
             }
-        });
-        map.fitBounds(bounds)
+        });        
     }
+    map.fitBounds(bounds);
 }
 
 function tripPlannerSearchParams(clickedItem) {
