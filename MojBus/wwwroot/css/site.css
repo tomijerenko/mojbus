@@ -186,6 +186,7 @@ footer {
     background: url(/images/lupa.svg) no-repeat scroll;
     padding-left: 35px;
     background-color: #f2f2f2;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .stopHeaderContainer {
@@ -268,6 +269,7 @@ footer {
     float: right;
     z-index: 10;
     border-radius: 4px;
+    border-radius: 0px 10px 10px 0px;
 }
 
 .input-group-addon {
@@ -280,13 +282,17 @@ footer {
     margin-top:-34px;
     float:left;
     position:relative;
-    z-index:1;
+    z-index:1;    
 }
 
-    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
-        background: #B8353D;
-        border-color: #B8353D;        
-    }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    background: #B8353D;
+    border-color: #B8353D;    
+}
+
+.tripPlannerAccordionHeader.ui-accordion-header.ui-corner-top.ui-state-default.ui-accordion-icons.ui-accordion-header-active.ui-state-active {
+    border-radius: 0px 10px 0px 0px;
+}
 
 .ui-accordion .ui-accordion-content {
     border: 0;
@@ -298,20 +304,25 @@ footer {
 }
 
 .plannerInput {
-    margin-bottom: 10px;
-    background-color: #f2f2f2;
+    background-color: #f2f2f2 !important;
+    padding-left: 35px;
+}
+
+#stopFrom.plannerInput {
+    border-radius: 10px 10px 0px 0px;
+    margin-bottom: 1px;
+    background: url(/images/startStop.svg) no-repeat scroll;
+}
+
+#stopTo.plannerInput {
+    border-radius: 0px 0px 10px 10px;
+    background: url(/images/endStop.svg) no-repeat scroll;    
 }
 
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
     background-color: rgba(184, 53, 61, 0.6);
     border-color: rgba(184, 53, 61, 0.8);
     color: white;
-}
-
-.datePickerContainer {
-    padding-bottom: 10px;
-    display:inline-block;
-    position:relative;
 }
 
 .tripPlannerAccordionHeader .ui-icon {
@@ -348,4 +359,38 @@ footer {
 .tripPlannerDate {
     position:absolute;
     bottom: 10px;
+}
+
+input#datepicker {
+    width: 100px;
+    background: white;
+    border-radius: 10px 0px 0px 10px;
+    float:left;
+    margin-right:1px;
+}
+
+input#timepicker {
+    width: 65px;
+    background: white;
+    border-radius: 0;
+    float: left;
+    margin-right: 1px;
+}
+
+.resetDateTimeButton {
+    border-radius: 0px 10px 10px 0px;
+}
+
+.dateTimeSearchParamsContainer {
+    position:relative;
+    display:inline-block;
+    margin: 15px 0px 10px 0px;
+}
+
+    .dateTimeSearchParamsContainer #timepicker, .dateTimeSearchParamsContainer #datepicker {
+        background-color: #f2f2f2 !important;
+    }
+
+.ui-accordion .ui-accordion-content {
+    //overflow: initial !important;
 }

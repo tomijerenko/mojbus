@@ -9,7 +9,9 @@
 
     $("#datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
-        minDate: 0
+        minDate: 0,
+        scrollDefault: 'now',
+
     });
 
     $('#timepicker').timepicker({
@@ -19,11 +21,15 @@
 
     if ($("#datepicker").data("date") !== undefined) {
         $('#datepicker').datepicker("setDate", new Date($("#datepicker").data("date")));
+    } else {
+        $('#datepicker').datepicker("setDate", new Date());
     }
 
     if ($("#timepicker").data("date") !== undefined) {
         $('#timepicker').timepicker("setTime", new Date($("#timepicker").data("date")));
-    }    
+    } else {
+        $('#timepicker').timepicker('setTime', new Date());
+    }
 });
 
 function filterMenu(inputElement, filterListId) {
@@ -75,7 +81,20 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 }
 
 function navigateWithDate(requestedUri) {
-    window.location.href = `${requestedUri}&date=${$('#datepicker').val()}T${$("#timepicker").val()}`;
+    window.location.href = `${requestedUri}${getDateTimeString()}`;
+}
+
+function getDateTimeString() {
+    let time = "";
+    if ($("#timepicker").val() !== undefined) {
+        time = `T${$("#timepicker").val()}`;
+    }
+    let date = "";
+    if ($("#datepicker").val() !== undefined) {
+        date = `${$("#datepicker").val()}`;
+    }
+
+    return `&date=${date}${time}`;
 }
 
 var map;
@@ -113,9 +132,20 @@ function initMap() {
 }
 
 function tripPlannerSearchParams(clickedItem) {
-    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}&date=${$("#datepicker").val()}T${$("#timepicker").val()}`);
+    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}${getDateTimeString()}`);
 }
 
 function chosenItemToInput(value, inputId) {
     document.getElementById(inputId).value = value;
+}
+
+function resetDateAndTimeToCurrent(clickedItem, navigationPath) {
+    $('#datepicker').datepicker("setDate", new Date());
+    $('#timepicker').timepicker('setTime', new Date());
+    $(clickedItem).attr('href', `${navigationPath}${getDateTimeString()}`);
+}
+
+function resetDateAndTimeToCurrentWithoutNavigation() {
+    $('#datepicker').datepicker("setDate", new Date());
+    $('#timepicker').timepicker('setTime', new Date());
 }

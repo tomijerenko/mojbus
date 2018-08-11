@@ -17,11 +17,15 @@ else
             <div class="tripPlannerStopName">@Model.EndStop.StopName.Trim()</div>
             <div class="tripPlannerDate">
                 <input type="text"
+                       class="form-control"
                        id="datepicker"
                        onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"
                        data-date="@Model.RequestedDate.Date">
                 <input id="timepicker"
-                       data-date="@Model.RequestedDate"/>
+                       class="form-control"
+                       data-date="@Model.RequestedDate"
+                       onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')">
+                <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')">RESET</a>
             </div>
         </div>
     </div>

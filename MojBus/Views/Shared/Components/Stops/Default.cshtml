@@ -59,9 +59,17 @@
                     }
                 </ul>
             </div>
-            <div id="datepicker" class="datePickerContainer"></div>
-            <input id="timepicker"/>
-            <a class="btn redButton btn-block" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
+            <div class="dateTimeSearchParamsContainer">
+                <input type="text"
+                       class="form-control"
+                       id="datepicker">
+                <input id="timepicker"
+                       class="form-control">
+                <button class="btn redButton resetDateTimeButton pull-left" onclick="resetDateAndTimeToCurrentWithoutNavigation()">RESET</button>
+            </div>            
+            <div>
+                <a class="btn redButton" href="#" onclick="tripPlannerSearchParams(this)">IŠČI</a>
+            </div>
         </div>
     </div>
 

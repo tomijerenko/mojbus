@@ -19,11 +19,15 @@
         </div>
         <div class="tripPlannerDate">
             <input type="text"
+                   class="form-control"
                    id="datepicker"
                    onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
-                   data-date="@Model.RequestedDate">
+                   data-date="@Model.RequestedDate.Date">
             <input id="timepicker"
-                   data-date="@Model.RequestedDate"/>
+                   class="form-control"
+                   data-date="@Model.RequestedDate"
+                   onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">
+            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">RESET</a>
         </div>
     </div>
 </div>
