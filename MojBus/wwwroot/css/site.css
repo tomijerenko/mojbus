@@ -405,3 +405,7 @@ div#datepicker {
 .commentText {
     font-size: 70%;
 }
+
+.tripPlannerStopNameContainer {
+    padding-top:10px;
+}

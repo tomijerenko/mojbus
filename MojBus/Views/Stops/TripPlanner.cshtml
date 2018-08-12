@@ -12,9 +12,15 @@ else
     <div class="stopHeaderContainer">
         <div id="map"></div>
         <div class="stopNameHeader">
-            <div class="tripPlannerStopName">@Model.StartStop.StopName.Trim()</div>
-            <div class="tripPlannerStopName">-</div>
-            <div class="tripPlannerStopName">@Model.EndStop.StopName.Trim()</div>
+            <div class="tripPlannerStopNameContainer">
+                <div class="tripPlannerStopName">
+                    @Model.StartStop.StopName.Trim()
+                </div>
+                <div class="tripPlannerStopName">-</div>
+                <div class="tripPlannerStopName">
+                    @Model.EndStop.StopName.Trim()
+                </div>
+            </div>
             <div class="tripPlannerDate">
                 <input type="text"
                        class="form-control"
