@@ -389,15 +389,17 @@ input#timepicker {
 .dateTimeSearchParamsContainer {
     position: relative;
     display: inline-block;
-    margin: 15px 0px 10px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
-    .dateTimeSearchParamsContainer #timepicker, .dateTimeSearchParamsContainer #datepicker {
+    .dateTimeSearchParamsContainer #timepicker {
         background-color: #f2f2f2 !important;
+        border-radius: 10px 0px 0px 10px;        
     }
 
-.ui-accordion .ui-accordion-content {
-    //overflow: initial !important;
+div#datepicker {
+    margin-top:10px;
+    display: inline-block;
 }
 
 .commentText {

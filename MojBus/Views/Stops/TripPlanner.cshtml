@@ -42,7 +42,13 @@ else
                         </div>
                         <div class="departureTimeTripPlanner">
                             @{
-                                IEnumerable<TransitTime> departureTimes = item.Trips.SelectMany(x => x.Times).OrderBy(x=>x.DepartureTime).Where(x => (Model.RequestedDate.Hour <= Convert.ToInt32(x.DepartureTime.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.DepartureTime.Substring(3, 2))) || (Model.RequestedDate.Hour < Convert.ToInt32(x.DepartureTime.Substring(0, 2)))).Take(5);
+                                IEnumerable<TransitTime> departureTimes = item.Trips
+                                    .SelectMany(x => x.Times)
+                                    .OrderBy(x => x.DepartureTime)
+                                    .Where(x => x.DepartureTime.Length > 5 ||
+                                                (Model.RequestedDate.Hour <= Convert.ToInt32(x.DepartureTime.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.DepartureTime.Substring(3, 2))) ||
+                                                (Model.RequestedDate.Hour < Convert.ToInt32(x.DepartureTime.Substring(0, 2))))
+                                    .Take(5);
 
                                 if (departureTimes.Count() == 0)
                                 {
@@ -69,7 +75,7 @@ else
 
     <script>
         endLat = @Model.EndStop.StopLat;
-        endLng = @Model.EndStop.StopLon;        
+        endLng = @Model.EndStop.StopLon;
     </script>
 
 
