@@ -59,6 +59,10 @@ namespace MojBus.Extensions
             }
             mappedData.Add(previous);
 
+            foreach (var item in mappedData)
+                if (item != null)
+                    item.DepartureTimes = item.DepartureTimes.OrderDepartureTimeAscending();
+
             return mappedData;
         }
 
@@ -198,10 +202,10 @@ namespace MojBus.Extensions
             {
                 StopLocationsForRoute.Add(new StopLocationModel() { StopLat = item.StopLat, StopLon = item.StopLon });
             }
-            
+
             return StopLocationsForRoute;
         }
-        
+
         public static TripPlannerModel ConvertToTripPlannerModel(this List<TripPlannerEntity> data)
         {
             TripPlannerModel TripPlannerData = new TripPlannerModel();
@@ -231,10 +235,10 @@ namespace MojBus.Extensions
             List<Trip> trips;
             List<TransitTime> transitTimes;
 
-            foreach (var groupedByTripShortName in data.GroupBy(x=>x.TripShortName))
+            foreach (var groupedByTripShortName in data.GroupBy(x => x.TripShortName))
             {
                 trips = new List<Trip>();
-                foreach (var groupedByTripHeadsign in groupedByTripShortName.GroupBy(x=>x.TripHeadsign))
+                foreach (var groupedByTripHeadsign in groupedByTripShortName.GroupBy(x => x.TripHeadsign))
                 {
                     transitTimes = new List<TransitTime>();
                     foreach (var item in groupedByTripHeadsign.ToList())
@@ -264,6 +268,19 @@ namespace MojBus.Extensions
             TripPlannerData.Lines = lines;
 
             return TripPlannerData;
+        }
+
+        public static List<string> OrderDepartureTimeAscending(this List<string> data)
+        {
+            List<string> orderedTimes = data.OrderBy(x => x).ToList();
+            List<string> temp = data.TakeWhile(x => x.Contains("+")).ToList();
+            foreach (string time in temp)
+            {
+                orderedTimes.Remove(time);
+            }
+            orderedTimes.AddRange(temp);
+
+            return orderedTimes;
         }
     }
 }

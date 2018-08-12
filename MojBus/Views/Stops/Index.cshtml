@@ -9,7 +9,7 @@
         <a class="btn changeDirectionButton"
            href="#"
            onclick="uriWithDateTimeToHref(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
-            @if (Model.DirectionId == 1)
+            @if (Model.DirectionId == 0)
             {
                 <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
             }
@@ -47,8 +47,9 @@
                         </div>
                         @{
                             IEnumerable<string> departureTimes = item.DepartureTimes
+                                    .OrderDepartureTimeAscending()
                                     .Where(x => x.Length > 5 ||
-                                                (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x..Substring(3, 2))) ||
+                                                (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) ||
                                                 (Model.RequestedDate.Hour < Convert.ToInt32(x.Substring(0, 2))))
                                     .Take(5);
 
