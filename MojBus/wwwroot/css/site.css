@@ -243,8 +243,7 @@ footer {
     background-color: #B8353D;
     color: white;
     font-size: 1.5em;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin: 30px -15px 0 -15px;
 }
 
 .favouritesArrowImage {
@@ -409,3 +408,17 @@ div#datepicker {
 .tripPlannerStopNameContainer {
     padding-top:10px;
 }
+
+.infoIcon {
+    position:fixed;
+    bottom:5px;
+    right:5px;
+}
+
+    .infoIcon > img {
+        opacity:0.3;
+    }
+
+    .infoIcon > img:hover {
+        opacity: 1;
+    }

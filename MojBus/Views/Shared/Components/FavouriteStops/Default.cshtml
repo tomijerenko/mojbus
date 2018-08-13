@@ -36,7 +36,7 @@
                             IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
                             if (departureTimes.Count() == 0)
                             {
-                                <span>Avtobus od trenutne ure naprej ne vozi več!</span>
+                                <span>Od izbrane ure naprej ne vozi več!</span>
                             }
                             else
                             {
