@@ -21,36 +21,34 @@
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                             <span class="tripShortName">@item.RouteShortName</span>
                         </div>
-                        <div class="pull-left">
-                            <span class="favouriteStopName pull-left">@item.StopName</span>
-                            <br />
-                            <span class="pull-left">Smer vožnje:</span>
-                            @if (item.DirectionID == 1)
-                            {
-                                <img class="favouritesArrowImage pull-left" src="~/images/awayFromCity.svg" />
-                            }
-                            else
-                            {
-                                <img class="favouritesArrowImage pull-left" src="~/images/toCity.svg" />
-                            }
-                        </div>
-                        @{
-                            IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
-                            if (departureTimes.Count() == 0)
-                            {
-                                <span>Od izbrane ure naprej ne vozi več!</span>
-                            }
-                            else
-                            {
-                                <div class="departureTime">
+                        <div class="departureTime">
+                            @{
+                                IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
+                                if (departureTimes.Count() == 0)
+                                {
+                                    <span>Od izbrane ure naprej ne vozi več!</span>
+                                }
+                                else
+                                {
+
                                     @foreach (string departureTime in departureTimes)
                                     {
                                         <span>@departureTime</span>
                                     }
-                                </div>
-
+                                }
                             }
-                        }
+                            <div>
+                                <span class="favouriteStopName">@item.StopName</span>
+                                @if (item.DirectionID == 1)
+                                {
+                                    <img class="favouritesArrowImage" src="~/images/awayFromCity.svg" />
+                                }
+                                else
+                                {
+                                    <img class="favouritesArrowImage" src="~/images/toCity.svg" />
+                                }
+                            </div>
+                        </div>                        
                     </a>
                     <div onclick="RemoveFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButtonIndex">
                         <img class="favouritesStarImageIndex" src="~/images/starRed.svg" />

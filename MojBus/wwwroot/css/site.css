@@ -53,7 +53,7 @@ footer {
     word-wrap: break-word;
 }
 
-    .departureTime :first-child {
+    .departureTime span:first-child {
         color: red;
     }
 
@@ -107,7 +107,11 @@ footer {
 }
 
 .favouritesStarImage {
-    width: 3em;
+    width: 2.8em;
+}
+
+.favouriteStopName {
+    color:black !important;
 }
 
 .searchBarArrowImage {
@@ -249,6 +253,8 @@ footer {
 .departureDataContainer {
     border-width: 0px 0px 1px 0px;
     border-radius: 0px;
+    padding-right: 0px;
+    padding-left:6px;
 }
 
 .favouritesSectionSplit {
