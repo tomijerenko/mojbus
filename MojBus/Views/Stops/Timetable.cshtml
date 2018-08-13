@@ -11,7 +11,9 @@
             <div class="lineNumberContainer timetableLineNumberContainer pull-left text-center" style="background-color: @Model.HTMLColor;">
                 <span class="tripShortName">@Model.RouteShortName</span>
             </div>
-            @Model.StopName.Trim()
+            <div class="timetableStopName">
+                <span >@Model.StopName.Trim()</span>
+            </div>
         </div>
         <div class="timetableDate">
             <input type="text"
@@ -31,11 +33,11 @@
         @if (item != null)
         {
             tempTime = item.DepartureTimes.First().Substring(0, 2);
-            <h2>
+            <div class="tripHeadsignSectionSplit">
                 @item.TripShortName
                 @item.TripHeadsign
-            </h2>
-            <div>
+            </div>
+            <div class="departureTimesTimetable">
                 @foreach (string departureTime in item.DepartureTimes)
                 {
                     if (departureTime.Substring(0, 2) != tempTime)
@@ -49,7 +51,7 @@
         }
         else
         {
-            <h2>NE VOZI NA TA DAN</h2>
+            <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
         }
     }
 </div>

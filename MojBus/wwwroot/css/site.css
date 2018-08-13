@@ -64,8 +64,12 @@ footer {
 .lineNumberContainer {
     width: auto;
     min-width: 45px;
-    font-size: 2em;
     margin-right: 5px;
+}
+
+.timetableStopName {
+    font-size: 1.3em;
+    margin-top: 5px;
 }
 
 .timetableLineNumberContainer {
@@ -77,6 +81,7 @@ footer {
 
 .tripShortName {
     color: white;
+    font-size:2em;
 }
 
 .flex-container {
@@ -110,7 +115,7 @@ footer {
     width: 2.8em;
 }
 
-.favouriteStopName {
+.textBlack {
     color:black !important;
 }
 
@@ -226,14 +231,21 @@ footer {
 
 .stopNameTextHeader {
     padding-top: 5px;
-    font-size: 2em;
+    width: 100%;
+}
+
+.stopNameTextHeaderIndex {
+    padding-top: 10px;
+    font-size: 1.7em;
     width: 100%;
 }
 
 .changeDirectionButton {
-    float: right;
+    position: absolute;
     border-width: 0;
-    padding: 0;
+    padding: 0 !important;
+    bottom: 5px;
+    right: 0;
 }
 
 .directionArrowImage {
@@ -447,3 +459,14 @@ div#datepicker {
     .ui-timepicker-list > li {
         padding-left:0 !important;
     }
+
+.tripHeadsignSectionSplit {
+    background-color: #B8353D;
+    color: white;
+    font-size: 1.5em;
+    margin: 0px -15px 0px -15px;
+}
+
+.departureTimesTimetable {
+    margin: 10px 0 10px 0;
+}

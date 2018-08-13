@@ -5,7 +5,7 @@
 <div class="stopHeaderContainer">
     <div id="map"></div>
     <div class="stopNameHeader">
-        <div class="stopNameTextHeader">@Model.StopName.Trim()</div>
+        <div class="stopNameTextHeaderIndex">@Model.StopName.Trim()</div>
         <a class="btn changeDirectionButton"
            href="#"
            onclick="uriWithDateTimeToHref(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">

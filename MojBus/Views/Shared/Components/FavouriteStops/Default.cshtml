@@ -26,7 +26,7 @@
                                 IEnumerable<string> departureTimes = item.DepartureTimes.Where(x => (currentDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && currentDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) || (currentDate.Hour < Convert.ToInt32(x.Substring(0, 2)))).Take(5);
                                 if (departureTimes.Count() == 0)
                                 {
-                                    <span>Od trenutne ure naprej ne vozi več!</span>
+                                    <span class="textBlack">Od trenutne ure naprej ne vozi več!</span>
                                 }
                                 else
                                 {
@@ -38,7 +38,7 @@
                                 }
                             }
                             <div>
-                                <span class="favouriteStopName">@item.StopName</span>
+                                <span class="textBlack">@item.StopName</span>
                                 @if (item.DirectionID == 1)
                                 {
                                     <img class="favouritesArrowImage" src="~/images/awayFromCity.svg" />
