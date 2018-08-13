@@ -24,6 +24,7 @@
                    id="datepicker"
                    onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
                    data-date="@Model.RequestedDate.Date">
+            <input type="hidden" id="dateISOFormat" />
             <input id="timepicker"
                    class="form-control"
                    data-date="@Model.RequestedDate"
@@ -89,7 +90,7 @@
     }
     else
     {
-        <h2>Avtobus na izbran datum ne vozi.</h2>
+        <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
     }
 </div>
 

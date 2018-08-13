@@ -92,6 +92,18 @@ footer {
     margin-left: -4px;
     border-width: 0px 0px 1px 0px;
     border-radius: 0px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.addToFavouritesButtonIndex {
+    border-width: 0px 0px 1px 0px;
+    border-radius: 0px;
+    padding: 10px 0 10px 0;
+}
+
+.favouritesStarImageIndex {
+    width: 2.3em;
 }
 
 .favouritesStarImage {
@@ -247,7 +259,7 @@ footer {
 }
 
 .favouritesArrowImage {
-    width: 2.5em;
+    width: 1em;
 }
 
 .redButton {
@@ -366,7 +378,7 @@ footer {
 }
 
 input#datepicker {
-    width: 100px;
+    width: 105px;
     background: white;
     border-radius: 10px 0px 0px 10px;
     float: left;
@@ -421,4 +433,11 @@ div#datepicker {
 
     .infoIcon > img:hover {
         opacity: 1;
+    }
+
+.ui-timepicker-list {
+    text-align:center;
+}
+    .ui-timepicker-list > li {
+        padding-left:0 !important;
     }

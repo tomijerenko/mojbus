@@ -27,6 +27,7 @@ else
                        id="datepicker"
                        onchange="navigateWithDate('@Url.Action("TripPlanner","Stops", new { stopFrom=Model.StartStop.StopName, stopTo=Model.EndStop.StopName})')"
                        data-date="@Model.RequestedDate.Date">
+                <input type="hidden" id="dateISOFormat" />
                 <input id="timepicker"
                        class="form-control"
                        data-date="@Model.RequestedDate"

@@ -8,15 +8,19 @@
     });
 
     $("#datepicker").datepicker({
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd. mm. yy',
         minDate: 0,
         scrollDefault: 'now',
-
+        altField: '#dateISOFormat',
+        altFormat: 'yy-mm-dd'
     });
+
+    $('#datepicker').datepicker($.datepicker.regional["si"]);
 
     $('#timepicker').timepicker({
         timeFormat: "H:i",
-        step: 15,
+        step: 30,
+        scrollDefault: 'now'
     });
 
     if ($("#datepicker").data("date") !== undefined) {
@@ -92,8 +96,8 @@ function getDateTimeString() {
         time = `T${$("#timepicker").val()}`;
     }
     let date = "";
-    if ($("#datepicker").val() !== undefined) {
-        date = `${$("#datepicker").val()}`;
+    if ($("#dateISOFormat").val() !== undefined) {
+        date = `${$("#dateISOFormat").val()}`;
     }
 
     return `&date=${date}${time}`;

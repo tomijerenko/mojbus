@@ -21,15 +21,17 @@
                         <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
                             <span class="tripShortName">@item.RouteShortName</span>
                         </div>
-                        <div class="pull-left text-center">
-                            <span class="favouriteStopName">@item.StopName</span>
+                        <div class="pull-left">
+                            <span class="favouriteStopName pull-left">@item.StopName</span>
+                            <br />
+                            <span class="pull-left">Smer vožnje:</span>
                             @if (item.DirectionID == 1)
                             {
-                                <img class="favouritesArrowImage" src="~/images/awayFromCity.svg" />
+                                <img class="favouritesArrowImage pull-left" src="~/images/awayFromCity.svg" />
                             }
                             else
                             {
-                                <img class="favouritesArrowImage" src="~/images/toCity.svg" />
+                                <img class="favouritesArrowImage pull-left" src="~/images/toCity.svg" />
                             }
                         </div>
                         @{
@@ -50,8 +52,8 @@
                             }
                         }
                     </a>
-                    <div onclick="RemoveFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
-                        <img class="favouritesStarImage" src="~/images/starRed.svg" />
+                    <div onclick="RemoveFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButtonIndex">
+                        <img class="favouritesStarImageIndex" src="~/images/starRed.svg" />
                     </div>
                 </div>
             }
