@@ -111,7 +111,7 @@ var stopsArray;
 
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'));
-    var markerSize = new google.maps.Size(100, 100);
+    var markerSize = new google.maps.Size(50, 50);
     var bounds = new google.maps.LatLngBounds();
 
     var startMarker = new google.maps.Marker({
@@ -144,7 +144,7 @@ function initMap() {
                     map: map,
                     icon: {
                         url: "/images/intermediateStop.svg",
-                        scaledSize: new google.maps.Size(50, 50)
+                        scaledSize: new google.maps.Size(30, 30)
                     }
                 });
                 bounds.extend(marker.getPosition());

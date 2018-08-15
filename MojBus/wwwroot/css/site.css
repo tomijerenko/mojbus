@@ -212,6 +212,8 @@ footer {
     padding-left: 35px;
     background-color: #f2f2f2;
     border-radius: 10px 10px 10px 10px;
+    background-size: 1.7em;
+    background-position:5px center;
 }
 
 .stopHeaderContainer {
@@ -346,11 +348,15 @@ footer {
     border-radius: 10px 10px 0px 0px;
     margin-bottom: 1px;
     background: url(/images/startStop.svg) no-repeat scroll;
+    background-size: 1.9em;
+    background-position: 5px center;
 }
 
 #stopTo.plannerInput {
     border-radius: 0px 0px 10px 10px;
     background: url(/images/endStop.svg) no-repeat scroll;
+    background-size: 1.9em;
+    background-position: 5px center;
 }
 
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
