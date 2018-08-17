@@ -120,7 +120,7 @@ footer {
 }
 
 .searchBarArrowImage {
-    width: 3em;
+    width: 2.5em;
 }
 
 .navbar {
@@ -375,6 +375,7 @@ footer {
 
 .stopsDropdownMenu {
     max-height: 200px;
+    margin-top: 1px;
 }
 
 .dropdownMenuDivItem {
@@ -452,7 +453,7 @@ div#datepicker {
 }
 
     .infoIcon > img {
-        opacity:0.2;
+        opacity:0.5;
     }
 
     .infoIcon > img:hover {

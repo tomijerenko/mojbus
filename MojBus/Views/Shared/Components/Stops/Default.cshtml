@@ -11,12 +11,12 @@
             {
                 <li name="@item.StopName">
                     <a class="dropdown-item"
-                       href="@Url.Action("Index","Stops",new
-                    {
-                        stopName = item.StopName,
-                        directionId = item.StopDirectionId,
-                        date = currentDate
-                    })"
+                       href="@Url.Action("Index", "Stops", new
+                        {
+                            stopName = item.StopName,
+                            directionId = item.StopDirectionId,
+                            date = currentDate.ToString("yyyy-MM-ddTHH\\:mm")
+                       })"
                        onclick="chosenItemToInput('@item.StopName', 'quickStopSelect')">
                         @if (item.StopDirectionId == 0)
                         {
@@ -38,7 +38,7 @@
         </div>
         <div class="tripPlannerAccordionMenu">
             <div class="stopsDropdownContainer">
-                <input id="stopFrom" onkeyup="filterMenu(this, 'stopsFromList')" class="form-control plannerInput dropdown-toggle" data-toggle="dropdown" aria-describedby="stopsFromList" placeholder="Izberite začetno postajo..." />
+                <input id="stopFrom" onkeyup="filterMenu(this, 'stopsFromList')" class="form-control plannerInput dropdown-toggle" data-toggle="dropdown" aria-describedby="stopsFromList" placeholder="Izberi začetno postajo..." />
                 <ul id="stopsFromList" class="dropdown-menu pre-scrollable btn-block stopsDropdownMenu" aria-labelledby="stopFrom">
                     @foreach (var item in Model.Select(x => x.StopName.Trim()).Distinct())
                     {
@@ -49,7 +49,7 @@
                 </ul>
             </div>
             <div class="stopsDropdownContainer">
-                <input id="stopTo" onkeyup="filterMenu(this, 'stopsToList')" class="form-control dropdown-toggle plannerInput" data-toggle="dropdown" aria-describedby="stopsToList" placeholder="Izberite končno postajo..." />
+                <input id="stopTo" onkeyup="filterMenu(this, 'stopsToList')" class="form-control dropdown-toggle plannerInput" data-toggle="dropdown" aria-describedby="stopsToList" placeholder="Izberi končno postajo..." />
                 <ul id="stopsToList" class="dropdown-menu pre-scrollable btn-block stopsDropdownMenu" aria-labelledby="stopTo">
                     @foreach (var item in Model.Select(x => x.StopName.Trim()).Distinct())
                     {
