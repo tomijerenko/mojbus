@@ -62,7 +62,7 @@ function ChangeFavourite(clickedItem, stopName, routeShortName, directionId) {
             routeShortName,
             directionId
         },
-        function (data, status) {
+        function (data) {
             if (data)
                 $(clickedItem).html('<img class="favouritesStarImage" src="images/starRed.svg" />');
             else
@@ -79,7 +79,7 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
             routeShortName,
             directionId
         },
-        function (data, status) {
+        function (data) {
             if (!data)
                 $(clickedItem).parent().remove();
         }
@@ -87,7 +87,7 @@ function RemoveFavourite(clickedItem, stopName, routeShortName, directionId) {
 }
 
 function navigateWithDate(requestedUri) {
-    window.location.href = `${requestedUri}${getDateTimeString()}`;
+    window.location.href = `${requestedUri}&date=${getDateTimeString()}`;
 }
 
 function getDateTimeString() {
@@ -100,7 +100,7 @@ function getDateTimeString() {
         date = `${$("#dateISOFormat").val()}`;
     }
 
-    return `&date=${date}${time}`;
+    return `${date}${time}`;
 }
 
 var lat;
@@ -154,12 +154,12 @@ function initMap() {
     map.fitBounds(bounds);
 }
 
-function tripPlannerSearchParams(clickedItem) {
-    $(clickedItem).attr('href', `/Stops/TripPlanner?stopFrom=${$("#stopFrom").val()}&stopTo=${$("#stopTo").val()}${getDateTimeString()}`);
+function mergeDateTime() {
+    $('#dateISOFormat').val(getDateTimeString());
 }
 
 function uriWithDateTimeToHref(clickedItem, uri) {
-    $(clickedItem).attr('href', `${uri}${getDateTimeString()}`);
+    $(clickedItem).attr('href', `${uri}&date=${getDateTimeString()}`);
 }
 
 function chosenItemToInput(value, inputId) {
@@ -169,7 +169,7 @@ function chosenItemToInput(value, inputId) {
 function resetDateAndTimeToCurrent(clickedItem, navigationPath) {
     $('#datepicker').datepicker("setDate", new Date());
     $('#timepicker').timepicker('setTime', new Date());
-    $(clickedItem).attr('href', `${navigationPath}${getDateTimeString()}`);
+    $(clickedItem).attr('href', `${navigationPath}&date=${getDateTimeString()}`);
 }
 
 function resetDateAndTimeToCurrentWithoutNavigation() {

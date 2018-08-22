@@ -24,6 +24,14 @@ namespace MojBus.Controllers
 
         public async Task<IActionResult> Index(string stopName, int directionId, DateTime date)
         {
+            if (stopName == null || stopName == "")
+            {
+                return View(new StopTimetable()
+                {
+                    RequestedDate = date == DateTime.MinValue ? DateTime.Now : date
+                });
+            }
+
             StopTimetable timetable = new StopTimetable()
             {
                 StopName = stopName,
@@ -47,6 +55,14 @@ namespace MojBus.Controllers
 
         public IActionResult Timetable(string stopName, string routeShortName, int directionId, DateTime date)
         {
+            if (stopName == null || stopName == "" || routeShortName == null || routeShortName == "")
+            {
+                return View(new StopTimetable()
+                {
+                    RequestedDate = date == DateTime.MinValue ? DateTime.Now : date
+                });
+            }
+
             var gtfsline = _context.Gtfslines.FirstOrDefault(x => x.TripShortName == routeShortName);
             StopTimetable timetable = new StopTimetable()
             {
@@ -70,6 +86,9 @@ namespace MojBus.Controllers
                 stopFrom = "";
             if (stopTo == null)
                 stopTo = "";
+            if (date == DateTime.MinValue)
+                date = DateTime.Now;
+
             TripPlannerModel model = _context.DepartureTimetableBetweenTwoStops(stopFrom, stopTo, date);
             model.RequestedDate = date;
             return View(model);
@@ -79,10 +98,15 @@ namespace MojBus.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToFavourite(FavouriteStopRouteModel favouriteStop)
         {
-            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
-            favouriteStop.UserId = user.Id;
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+                favouriteStop.UserId = user.Id;
 
-            return Json(_context.AddStopRouteToFavourites(favouriteStop));
+                return Json(_context.AddStopRouteToFavourites(favouriteStop));
+            }
+
+            return Json(false);            
         }
     }
 }

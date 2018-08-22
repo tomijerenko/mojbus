@@ -2,98 +2,105 @@
 @{
     ViewData["Title"] = "Odhodi iz postaje";
 }
-<div class="stopHeaderContainer">
-    <div id="map"></div>
-    <div class="stopNameHeader">
-        <div class="stopNameTextHeaderIndex">@Model.StopName.Trim()</div>
-        <a class="btn changeDirectionButton"
-           href="#"
-           onclick="uriWithDateTimeToHref(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1})')">
-            @if (Model.DirectionId == 0)
-            {
-                <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
-            }
-            else
-            {
-                <img class="directionArrowImage" src="~/images/toCity.svg" />
-            }
-        </a>
-        <div class="tripPlannerDate">
-            <input type="text"
-                   class="form-control"
-                   id="datepicker"
-                   onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')"
-                   data-date="@Model.RequestedDate.Date">
-            <input type="hidden" id="dateISOFormat" />
-            <input id="timepicker"
-                   class="form-control"
-                   data-date="@Model.RequestedDate"
-                   onchange="navigateWithDate('@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">
-            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("Index","Stops", new { stopName = Model.StopName, directionId = Model.DirectionId})')">PONASTAVI</a>
+
+@if (Model.StopName != "" && Model.StopName != null)
+{
+    <div class="stopHeaderContainer">
+        <div id="map"></div>
+        <div class="stopNameHeader">
+            <div class="stopNameTextHeaderIndex">@Model.StopName.Trim()</div>
+            <a class="btn changeDirectionButton"
+               href="#"
+               onclick="uriWithDateTimeToHref(this,'@Url.Action("Index", "Stops", new { stopName = Model.StopName, directionId = Model.DirectionId == 1 ? 0 : 1 })')">
+                @if (Model.DirectionId == 0)
+                {
+                    <img class="directionArrowImage" src="~/images/awayFromCity.svg" />
+                }
+                else
+                {
+                    <img class="directionArrowImage" src="~/images/toCity.svg" />
+                }
+            </a>
+            <div class="tripPlannerDate">
+                <input type="text"
+                       class="form-control"
+                       id="datepicker"
+                       onchange="navigateWithDate('@Url.Action("Index", "Stops", new { stopName = Model.StopName, directionId = Model.DirectionId })')"
+                       data-date="@Model.RequestedDate.Date">
+                <input type="hidden" id="dateISOFormat" />
+                <input id="timepicker"
+                       class="form-control"
+                       data-date="@Model.RequestedDate"
+                       onchange="navigateWithDate('@Url.Action("Index", "Stops", new { stopName = Model.StopName, directionId = Model.DirectionId })')">
+                <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this,'@Url.Action("Index", "Stops", new { stopName = Model.StopName, directionId = Model.DirectionId })')">PONASTAVI</a>
+            </div>
         </div>
     </div>
-</div>
 
-<div>
-    @if (Model.StopTimetables.Count != 0)
-    {
-        @foreach (var item in Model.StopTimetables)
+    <div>
+        @if (Model.StopTimetables.Count != 0)
         {
-            @if (item != null)
+            @foreach (var item in Model.StopTimetables)
             {
-                <div class="flex-container flexContainerNoMargin">
-                    <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = Model.RequestedDate })">
-                        <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
-                            <span class="tripShortName">@item.RouteShortName</span>
-                        </div>
-                        @{
-                            IEnumerable<string> departureTimes = item.DepartureTimes
-                                    .OrderDepartureTimeAscending()
-                                    .Where(x => x.Length > 5 ||
-                                                (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) ||
-                                                (Model.RequestedDate.Hour < Convert.ToInt32(x.Substring(0, 2))))
-                                    .Take(5);
+                @if (item != null)
+                {
+                    <div class="flex-container flexContainerNoMargin">
+                        <a class="btn btn-default btn-block departureDataContainer" href="@Url.Action("Timetable", "Stops", new { stopName = item.StopName, routeShortName = item.TripShortName, directionId = item.DirectionID, date = Model.RequestedDate })">
+                            <div class="lineNumberContainer pull-left text-center" style="background-color: @item.HTMLColor;">
+                                <span class="tripShortName">@item.RouteShortName</span>
+                            </div>
+                            @{
+                                IEnumerable<string> departureTimes = item.DepartureTimes
+                                        .OrderDepartureTimeAscending()
+                                        .Where(x => x.Length > 5 ||
+                                                    (Model.RequestedDate.Hour <= Convert.ToInt32(x.Substring(0, 2)) && Model.RequestedDate.Minute <= Convert.ToInt32(x.Substring(3, 2))) ||
+                                                    (Model.RequestedDate.Hour < Convert.ToInt32(x.Substring(0, 2))))
+                                        .Take(5);
 
-                            if (departureTimes.Count() == 0)
-                            {
-                                <span>Od izbrane ure naprej ne vozi več!</span>
-                            }
-                            else
-                            {
-                                <div class="departureTime">
-                                    @foreach (string departureTime in departureTimes)
-                                    {
-                                        <span>@departureTime</span>
-                                    }
-                                </div>
+                                if (departureTimes.Count() == 0)
+                                {
+                                    <span>Od izbrane ure naprej ne vozi več!</span>
+                                }
+                                else
+                                {
+                                    <div class="departureTime">
+                                        @foreach (string departureTime in departureTimes)
+                                        {
+                                            <span>@departureTime</span>
+                                        }
+                                    </div>
 
+                                }
                             }
+                        </a>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
+                                @if (item.isFavourite)
+                                {
+                                    <img class="favouritesStarImage" src="~/images/starRed.svg" />
+                                }
+                                else
+                                {
+                                    <img class="favouritesStarImage" src="~/images/starGray.svg" />
+                                }
+                            </div>
                         }
-                    </a>
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div onclick="ChangeFavourite(this, '@item.StopName', '@item.TripShortName', '@item.DirectionID')" class="btn btn-default addToFavouritesButton">
-                            @if (item.isFavourite)
-                            {
-                                <img class="favouritesStarImage" src="~/images/starRed.svg" />
-                            }
-                            else
-                            {
-                                <img class="favouritesStarImage" src="~/images/starGray.svg" />
-                            }
-                        </div>
-                    }
-                </div>
+                    </div>
+                }
             }
         }
+        else
+        {
+            <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
+        }
+    </div>
+    @section Scripts {
+        @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
     }
-    else
-    {
-        <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
-    }
-</div>
-
-@section Scripts {
-    @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
+}
+else
+{
+    <h2 class="text-center">Manjka parameter.</h2>
 }

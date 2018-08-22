@@ -3,63 +3,70 @@
     ViewData["Title"] = "Vozni red linije iz postaje";
     string tempTime = "0";
 }
-
-<div class="stopHeaderContainer">
-    <div id="map"></div>
-    <div class="stopNameHeader">
-        <div class="stopNameTextHeader">
-            <div class="lineNumberContainer timetableLineNumberContainer pull-left text-center" style="background-color: @Model.HTMLColor;">
-                <span class="tripShortName">@Model.RouteShortName</span>
+@if (Model.StopName != "" && Model.StopName != null && Model.RouteShortName != "" && Model.RouteShortName != null)
+{
+    <div class="stopHeaderContainer">
+        <div id="map"></div>
+        <div class="stopNameHeader">
+            <div class="stopNameTextHeader">
+                <div class="lineNumberContainer timetableLineNumberContainer pull-left text-center" style="background-color: @Model.HTMLColor;">
+                    <span class="tripShortName">@Model.RouteShortName</span>
+                </div>
+                <div class="timetableStopName">
+                    <span>@Model.StopName.Trim()</span>
+                </div>
             </div>
-            <div class="timetableStopName">
-                <span >@Model.StopName.Trim()</span>
+            <div class="timetableDate">
+                <input type="text"
+                       id="datepicker"
+                       class="form-control"
+                       onchange="navigateWithDate('@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')"
+                       data-date="@Model.RequestedDate">
+                <input type="hidden" id="dateISOFormat" />
+                <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this, '@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')">PONASTAVI</a>
             </div>
-        </div>
-        <div class="timetableDate">
-            <input type="text"
-                   id="datepicker"
-                   class="form-control"
-                   onchange="navigateWithDate('@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')"
-                   data-date="@Model.RequestedDate">
-            <input type="hidden" id="dateISOFormat" />
-            <a class="btn redButton resetDateTimeButton" href="#" onclick="resetDateAndTimeToCurrent(this, '@Url.Action("Timetable","Stops", new { stopName = Model.StopName, routeShortName = Model.RouteShortName, directionId = Model.DirectionId})')">PONASTAVI</a>
         </div>
     </div>
-</div>
 
-<div class="text-center">
-    @foreach (var item in Model.StopTimetables)
-    {
-        @if (item != null)
+    <div class="text-center">
+        @foreach (var item in Model.StopTimetables)
         {
-            tempTime = item.DepartureTimes.First().Substring(0, 2);
-            <div class="tripHeadsignSectionSplit">
-                @item.TripShortName
-                @item.TripHeadsign
-            </div>
-            <div class="departureTimesTimetable">
-                @foreach (string departureTime in item.DepartureTimes)
-                {
-                    if (departureTime.Substring(0, 2) != tempTime)
+            @if (item != null)
+            {
+                tempTime = item.DepartureTimes.First().Substring(0, 2);
+                <div class="tripHeadsignSectionSplit">
+                    @item.TripShortName
+                    @item.TripHeadsign
+                </div>
+                <div class="departureTimesTimetable">
+                    @foreach (string departureTime in item.DepartureTimes)
                     {
-                        <br />
-                        tempTime = departureTime.Substring(0, 2);
+                        if (departureTime.Substring(0, 2) != tempTime)
+                        {
+                            <br />
+                            tempTime = departureTime.Substring(0, 2);
+                        }
+                        <span>@departureTime</span>
                     }
-                    <span>@departureTime</span>
-                }
-            </div>
+                </div>
+            }
+            else
+            {
+                <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
+            }
         }
-        else
-        {
-            <h2>Avtobus v izbrano smer oz. na izbran datum ne vozi.</h2>
-        }
-    }
-</div>
+    </div>
 
-<script>
+    <script>
     stopsArray = @Html.Raw(Json.Serialize(Model.RouteStopLocations));
-</script>
+    </script>
 
-@section Scripts {
-    @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
+    @section Scripts {
+        @await Html.PartialAsync("_GoogleMapsScripts", Model.StopLocation)
+    }
+
+}
+else
+{
+    <h2 class="text-center">Manjka parameter.</h2>
 }

@@ -1,6 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MojBus.Data;
+using MojBus.Data.Entities;
+using MojBus.Extensions;
 using MojBus.Models;
 
 namespace MojBus.Controllers
@@ -14,9 +19,11 @@ namespace MojBus.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<Gtfsstops> stops = await _context.GetStops().ToListAsync();
+
+            return View(stops);
         }
 
         public IActionResult About()
