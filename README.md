@@ -1,4 +1,5 @@
-#MojBus
+# MojBus
+
 App for public transit schedule and transit path overview (designed for buses in Maribor, Slovenia)
 
 General Transit Feed Specification
